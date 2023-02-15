@@ -78,7 +78,3 @@ module "hcp-vault" {
   hvn_id          = module.hcp-hvn.id
   tier            = var.hcp_vault_tier
 }
-
-module "name" {
-  
-}
