@@ -7,7 +7,17 @@ variable "owner" {
   description = "Resource owner identified using an email address"
   type        = string
 }
+variable "admin_username" {
+  description = "ubuntu admin user"
+  type        = string
+  default = "ubuntu"
+}
 
+variable "prefix" {
+  description = "resource prefix"
+  type        = string
+  default = "demo"
+}
 variable "ttl" {
   description = "Resource TTL (time-to-live)"
   type        = number
@@ -18,10 +28,6 @@ variable "deployment_id" {
   type        = string
 }
 
-variable "key_pair_key_name" {
-  description = "Key pair name"
-  type        = string
-}
 
 variable "vpc_cidr" {
   description = "VPC CIDR"

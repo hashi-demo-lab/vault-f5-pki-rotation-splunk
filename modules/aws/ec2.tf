@@ -1,6 +1,3 @@
-locals {
-  key_pair_private_key = file("${path.root}/${var.key_pair_key_name}.pem")
-}
 
 data "aws_ami" "ubuntu20" {
 
@@ -22,10 +19,55 @@ data "aws_ami" "ubuntu20" {
   owners      = ["099720109477"]
 }
 
+resource "aws_eip" "main" {
+  instance = aws_instance.bastion.id
+  vpc      = true
+}
+
+resource "aws_eip_association" "main" {
+  instance_id   = aws_instance.bastion.id
+  allocation_id = aws_eip.main.id
+}
+
+resource "null_resource" "configure-future-app" {
+  depends_on = [aws_eip_association.main]
+
+  triggers = {
+    build_number = timestamp()
+  }
+
+  provisioner "file" {
+    source      = "files/"
+    destination = "/home/ubuntu/"
+
+    connection {
+      type        = "ssh"
+      user        = var.admin_username
+      private_key = tls_private_key.main.private_key_pem
+      host        = aws_eip.main.public_ip
+    }
+  }
+}
+
+resource "tls_private_key" "main" {
+  algorithm = "RSA"
+}
+
+locals {
+  private_key_filename = "${var.prefix}-ssh-key.pem"
+}
+
+resource "aws_key_pair" "main" {
+  key_name   = local.private_key_filename
+  public_key = tls_private_key.main.public_key_openssh
+}
+
+
 resource "aws_instance" "bastion" {
   ami             = data.aws_ami.ubuntu20.id
   instance_type   = "t2.micro"
-  key_name        = var.key_pair_key_name
+  key_name        = aws_key_pair.main.key_name
+  associate_public_ip_address = true
   subnet_id       = element(module.vpc.public_subnets, 1)
   security_groups = [module.sg-ssh.security_group_id]
 
@@ -37,22 +79,11 @@ resource "aws_instance" "bastion" {
     owner = var.owner
     TTL   = var.ttl
   }
+}
 
-  connection {
-    host        = aws_instance.bastion.public_dns
-    user        = "ubuntu"
-    agent       = false
-    private_key = local.key_pair_private_key
-  }
 
-  provisioner "file" {
-    source      = "${path.root}/${var.key_pair_key_name}.pem"
-    destination = "/home/ubuntu/${var.key_pair_key_name}.pem"
-  }
-
-  provisioner "remote-exec" {
+  /* provisioner "remote-exec" {
     inline = [
       "chmod 400 /home/ubuntu/${var.key_pair_key_name}.pem"
     ]
-  }
-}
+  } */
