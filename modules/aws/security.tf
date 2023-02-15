@@ -1,4 +1,4 @@
-module "sg-ssh" {
+module "sg-mgmt" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "4.17.1"
 
@@ -6,13 +6,8 @@ module "sg-ssh" {
   vpc_id = module.vpc.vpc_id
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
-  ingress_rules = [
-                    "http-80-tcp",
-                    "https-443-tcp",
-                    "ssh-tcp"
-                    
-  ]
+  ingress_rules = var.mgmt_ingress_rules
   
   egress_cidr_blocks = ["0.0.0.0/0"]
-  egress_rules = ["ssh-tcp", "https-443-tcp"]
+  egress_rules = var.mgmt_egress_rules
 }

@@ -13,6 +13,11 @@ variable "admin_username" {
   default = "ubuntu"
 }
 
+variable "aws_key_pair_key_name" {
+  description = "AWS key pair name"
+  type = string
+}
+
 variable "ssh_pubkey" {
   description = "ssh public key"
   type = string
@@ -77,4 +82,17 @@ variable "hcp_hvn_provider_account_id" {
 variable "hcp_hvn_cidr" {
   description = "HCP HVN cidr"
   type        = string
+}
+
+
+variable "mgmt_ingress_rules" {
+  description = "Management security group ingress rules"
+  type = list(any)
+  default = ["http-80-tcp","https-443-tcp","ssh-tcp","https-8443-tcp"]
+}
+
+variable "mgmt_egress_rules" {
+  description = "Management security group egress rules"
+  type = list(any)
+  default = ["http-80-tcp","https-443-tcp","ssh-tcp","https-8443-tcp"]
 }

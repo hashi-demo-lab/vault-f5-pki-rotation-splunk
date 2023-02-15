@@ -15,7 +15,7 @@ output "private_subnet_ids" {
 
 output "security_group_ssh_id" {
   description = "Security group ssh id"
-  value       = module.sg-ssh.security_group_id
+  value       = module.sg-mgmt.security_group_id
 }
 
 output "tgw_id" {

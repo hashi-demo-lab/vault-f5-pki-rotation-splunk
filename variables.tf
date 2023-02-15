@@ -78,6 +78,11 @@ variable "aws_key_pair_key_name" {
   default     = ""
 }
 
+variable "ssh_pubkey" {
+  description = "SSH public key"
+  type        = string
+}
+
 variable "aws_vpc_cidr" {
   description = "AWS VPC CIDR"
   type        = string
@@ -158,13 +163,35 @@ variable "gcp_gke_cluster_service_cidr" {
   default     = "172.20.0.0/18"
 }
 
-### workspace variables
-
 # Organization level variables
 variable "organization" {
   description = "TFC Organization to build under"
   type        = string
 }
+
+#### F5 Variables
+
+variable "mgmt_securitygroup_ids" {
+  description = "F5 Management interface - AWS Security group ids"
+  type        = list(any)
+}
+
+variable "prefix" {
+  description = "F5 - prefix for resources"
+  type        = string
+  default     = "bigip-aws-1nic"
+}
+
+
+
+
+
+
+
+
+### workspace variables
+
+
 
 /* # Workspace level variables
 variable "workspace_name" {

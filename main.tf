@@ -65,8 +65,9 @@ module "infra-aws" {
   eks_worker_desired_capacity = var.aws_eks_worker_desired_capacity
   hcp_hvn_provider_account_id = module.hcp-hvn.provider_account_id
   hcp_hvn_cidr                = var.hcp_hvn_cidr
+  ssh_pubkey = var.ssh_pubkey
+  aws_key_pair_key_name = var.aws_key_pair_key_name
 }
-
 
 // hcp vault
 
@@ -76,4 +77,27 @@ module "hcp-vault" {
   deployment_name = var.deployment_name
   hvn_id          = module.hcp-hvn.id
   tier            = var.hcp_vault_tier
+}
+
+
+locals {
+  publicSubnet = module.infra-aws.public_subnet_ids
+  
+}
+
+module bigip {
+
+  depends_on = [
+    module.infra-aws
+  ]
+
+  source                 = "F5Networks/bigip-module/aws"
+  version = "1.1.10"
+  prefix                 = var.prefix
+  ec2_key_name           = var.aws_key_pair_key_name
+  mgmt_subnet_ids        = [{ "subnet_id" = local.publicSubnet,
+                              "public_ip" = true, 
+                              "private_ip_primary" = ""
+                            }]                    
+  mgmt_securitygroup_ids = module.infra-aws.security_group_ssh_id
 }

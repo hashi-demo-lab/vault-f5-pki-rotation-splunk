@@ -49,16 +49,9 @@ resource "aws_eip_association" "main" {
   }
 } */
 
-resource "tls_private_key" "main" {
-  algorithm = "RSA"
-}
-
-locals {
-  private_key_filename = "${var.prefix}-ssh-key.pem"
-}
 
 resource "aws_key_pair" "main" {
-  key_name   = local.private_key_filename
+  key_name   = var.aws_key_pair_key_name
   public_key = var.ssh_pubkey
 }
 
@@ -69,7 +62,7 @@ resource "aws_instance" "bastion" {
   key_name        = aws_key_pair.main.key_name
   associate_public_ip_address = true
   subnet_id       = element(module.vpc.public_subnets, 1)
-  security_groups = [module.sg-ssh.security_group_id]
+  security_groups = [module.sg-mgmt.security_group_id]
 
   lifecycle {
     ignore_changes = all
