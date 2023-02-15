@@ -29,7 +29,7 @@ resource "aws_eip_association" "main" {
   allocation_id = aws_eip.main.id
 }
 
-resource "null_resource" "configure-future-app" {
+/* resource "null_resource" "configure-future-app" {
   depends_on = [aws_eip_association.main]
 
   triggers = {
@@ -47,7 +47,7 @@ resource "null_resource" "configure-future-app" {
       host        = aws_eip.main.public_ip
     }
   }
-}
+} */
 
 resource "tls_private_key" "main" {
   algorithm = "RSA"
@@ -59,7 +59,7 @@ locals {
 
 resource "aws_key_pair" "main" {
   key_name   = local.private_key_filename
-  public_key = tls_private_key.main.public_key_openssh
+  public_key = var.ssh_pubkey
 }
 
 
@@ -80,10 +80,3 @@ resource "aws_instance" "bastion" {
     TTL   = var.ttl
   }
 }
-
-
-  /* provisioner "remote-exec" {
-    inline = [
-      "chmod 400 /home/ubuntu/${var.key_pair_key_name}.pem"
-    ]
-  } */
