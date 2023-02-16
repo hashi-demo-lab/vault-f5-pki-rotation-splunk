@@ -6,6 +6,10 @@ locals {
 
 }
 
+
+#May want separate mount points
+
+
 resource "vault_mount" "pki-example" {
   depends_on = [
     local.hcp_vault_public_fqdn
