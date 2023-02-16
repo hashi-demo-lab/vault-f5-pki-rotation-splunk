@@ -9,7 +9,6 @@ resource "random_string" "suffix" {
 
 
 // hashicorp cloud platform (hcp) infrastructure
-
 module "hcp-hvn" {
   source = "./modules/hcp"
 
@@ -22,7 +21,6 @@ module "hcp-hvn" {
 }
 
 // amazon web services (aws) infrastructure
-
 module "infra-aws" {
   source = "./modules/aws"
 
@@ -44,7 +42,6 @@ module "infra-aws" {
 }
 
 // hcp vault
-
 module "hcp-vault" {
   source = "./modules/vault/"
 
@@ -56,11 +53,10 @@ module "hcp-vault" {
 
 locals {
   publicSubnet = tolist(module.infra-aws.public_subnet_ids)[0]
-  
 }
 
 
-# F5VE using AWS Marketplace 
+# F5VE using AWS Marketplace - min size and speed for lowest cost
 module bigip {
   depends_on = [
     module.infra-aws

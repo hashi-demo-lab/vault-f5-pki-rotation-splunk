@@ -7,8 +7,7 @@ locals {
 }
 
 
-#May want separate mount points
-
+#Separate mounts for root and intermediate
 
 resource "vault_mount" "pki-example" {
   depends_on = [
