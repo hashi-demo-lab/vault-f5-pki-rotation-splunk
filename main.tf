@@ -7,32 +7,6 @@ resource "random_string" "suffix" {
   special = false
 }
 
-// terraform cloud workspace onboarding
-
-/* module "tfc-workspace-onboarding" {
-  source = "github.com/hashicorp-demo-lab/terraform-tfe-onboarding-module"
-
-  organization                  = var.organization
-  create_project                = var.create_project
-  project_name                  = var.project_name
-  workspace_name                = var.workspace_name
-  workspace_description         = var.workspace_description
-  workspace_terraform_version   = var.workspace_terraform_version
-  workspace_tags                = var.workspace_tags
-  variables                     = var.variables
-  remote_state                  = var.remote_state
-  remote_state_consumers        = var.remote_state_consumers
-  vcs_repo                      = var.vcs_repo
-  workspace_vcs_directory       = var.workspace_vcs_directory
-  workspace_auto_apply          = var.workspace_auto_apply
-  workspace_agents              = var.workspace_agents
-  execution_mode                = var.execution_mode
-  agent_pool_name               = var.agent_pool_name
-  assessments_enabled           = var.assessments_enabled
-  workspace_read_access_emails  = var.workspace_read_access_emails
-  workspace_write_access_emails = var.workspace_write_access_emails
-  workspace_plan_access_emails  = var.workspace_plan_access_emails
-} */
 
 // hashicorp cloud platform (hcp) infrastructure
 
@@ -85,17 +59,17 @@ locals {
   
 }
 
-module bigip {
 
+# F5VE using AWS Marketplace 
+module bigip {
   depends_on = [
     module.infra-aws
   ]
-
-  source                 = "F5Networks/bigip-module/aws"
+  source  = "F5Networks/bigip-module/aws"
   version = "1.1.10"
 
   f5_ami_search_name = "F5 BIGIP-16.1.3.3* PAYG-Good 25Mbps*"
-  
+  ec2_instance_type = "t2.medium"
   prefix                 = var.prefix
   ec2_key_name           = var.aws_key_pair_key_name
   mgmt_subnet_ids        = [{ "subnet_id" = local.publicSubnet,
