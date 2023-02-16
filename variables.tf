@@ -171,11 +171,6 @@ variable "organization" {
 
 #### F5 Variables
 
-variable "mgmt_securitygroup_ids" {
-  description = "F5 Management interface - AWS Security group ids"
-  type        = list(any)
-}
-
 variable "prefix" {
   description = "F5 - prefix for resources"
   type        = string

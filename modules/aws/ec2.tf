@@ -29,31 +29,14 @@ resource "aws_eip_association" "main" {
   allocation_id = aws_eip.main.id
 }
 
-/* resource "null_resource" "configure-future-app" {
-  depends_on = [aws_eip_association.main]
-
-  triggers = {
-    build_number = timestamp()
-  }
-
-  provisioner "file" {
-    source      = "files/"
-    destination = "/home/ubuntu/"
-
-    connection {
-      type        = "ssh"
-      user        = var.admin_username
-      private_key = tls_private_key.main.private_key_pem
-      host        = aws_eip.main.public_ip
-    }
-  }
-} */
-
 
 resource "aws_key_pair" "main" {
   key_name   = var.aws_key_pair_key_name
   public_key = var.ssh_pubkey
+  
 }
+
+
 
 
 resource "aws_instance" "bastion" {

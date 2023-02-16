@@ -18,6 +18,7 @@ variable "aws_key_pair_key_name" {
   type = string
 }
 
+
 variable "ssh_pubkey" {
   description = "ssh public key"
   type = string
