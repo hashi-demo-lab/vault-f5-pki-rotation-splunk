@@ -18,13 +18,11 @@ provider "aws" {
 }
 
 provider "hcp" {
-  client_id     = var.hcp_client_id
-  client_secret = var.hcp_client_secret
+
 }
 
 provider "vault" {
   address = local.hcp_vault_public_fqdn
   token = local.vault_token
-  
 }
 
