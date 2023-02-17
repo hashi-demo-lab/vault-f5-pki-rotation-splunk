@@ -51,10 +51,6 @@ module "hcp-vault" {
 }
 
 
-locals {
-  publicSubnet = tolist(module.infra-aws.public_subnet_ids)[0]
-}
-
 
 # F5VE using AWS Marketplace - min size and speed for lowest cost
 module "bigip" {

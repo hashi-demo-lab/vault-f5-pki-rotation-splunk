@@ -22,7 +22,7 @@ provider "hcp" {
 }
 
 provider "vault" {
-  address = local.hcp_vault_public_fqdn
+  address = local.vault_fqdn
   token   = local.vault_token
 }
 
