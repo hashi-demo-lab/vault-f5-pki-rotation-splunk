@@ -1,3 +1,5 @@
+## Code from Yulei https://github.com/ausmartway/vault-config-as-code/tree/local
+
 // //pki root CA secret engine
 resource "vault_mount" "pki_root" {
   path                      = "pki_root"
