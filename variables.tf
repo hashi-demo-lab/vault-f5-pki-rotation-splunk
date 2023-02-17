@@ -178,7 +178,13 @@ variable "prefix" {
 }
 
 
+## Vault PKI Variables
 
+variable "customername" {
+  description = "Customer Demo Name"
+  type        = string
+  default     = "acme"
+}
 
 
 

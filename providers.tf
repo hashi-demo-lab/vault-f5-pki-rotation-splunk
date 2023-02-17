@@ -6,7 +6,7 @@ terraform {
     }
 
     vault = {
-      source = "hashicorp/vault"
+      source  = "hashicorp/vault"
       version = "3.12.0"
     }
 
@@ -23,6 +23,6 @@ provider "hcp" {
 
 provider "vault" {
   address = local.hcp_vault_public_fqdn
-  token = local.vault_token
+  token   = local.vault_token
 }
 

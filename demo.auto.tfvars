@@ -7,6 +7,7 @@ ssh_pubkey            = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDOL7uceFyeKxFV/uH
 aws_key_pair_key_name = "awsf5demo"
 # terraform cloud workspace onboarding varables
 organization = "hashi-demos-apj"
+customername = "acme"
 
 # F5 Variables
 

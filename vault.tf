@@ -1,8 +1,8 @@
 
 
 locals {
-    hcp_vault_public_fqdn = module.hcp-vault.public_endpoint_url
-    vault_token = module.hcp-vault.admin_token
+  hcp_vault_public_fqdn = module.hcp-vault.public_endpoint_url
+  vault_token           = module.hcp-vault.admin_token
 
 }
 

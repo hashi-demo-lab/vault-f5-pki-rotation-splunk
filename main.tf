@@ -37,8 +37,8 @@ module "infra-aws" {
   eks_worker_desired_capacity = var.aws_eks_worker_desired_capacity
   hcp_hvn_provider_account_id = module.hcp-hvn.provider_account_id
   hcp_hvn_cidr                = var.hcp_hvn_cidr
-  ssh_pubkey = var.ssh_pubkey
-  aws_key_pair_key_name = var.aws_key_pair_key_name
+  ssh_pubkey                  = var.ssh_pubkey
+  aws_key_pair_key_name       = var.aws_key_pair_key_name
 }
 
 // hcp vault
@@ -57,7 +57,7 @@ locals {
 
 
 # F5VE using AWS Marketplace - min size and speed for lowest cost
-module bigip {
+module "bigip" {
   depends_on = [
     module.infra-aws
   ]
@@ -65,21 +65,21 @@ module bigip {
   version = "1.1.10"
 
   f5_ami_search_name = "F5 BIGIP-16.1.3.3* PAYG-Good 25Mbps*"
-  ec2_instance_type = "t2.medium"
-  prefix                 = var.prefix
-  ec2_key_name           = var.aws_key_pair_key_name
-  mgmt_subnet_ids        = [{ "subnet_id" = local.publicSubnet,
-                              "public_ip" = true, 
-                              "private_ip_primary" = ""
-                            }]                    
+  ec2_instance_type  = "t2.medium"
+  prefix             = var.prefix
+  ec2_key_name       = var.aws_key_pair_key_name
+  mgmt_subnet_ids = [{ "subnet_id" = local.publicSubnet,
+    "public_ip"          = true,
+    "private_ip_primary" = ""
+  }]
   mgmt_securitygroup_ids = [module.infra-aws.security_group_ssh_id]
 
   #updating to latest
-  DO_URL = "https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v1.36.0/f5-declarative-onboarding-1.36.0-4.noarch.rpm"
-  AS3_URL = "https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v3.43.0/f5-appsvcs-3.43.0-2.noarch.rpm"
-  TS_URL = "https://github.com/F5Networks/f5-telemetry-streaming/releases/download/v1.32.0/f5-telemetry-1.32.0-2.noarch.rpm"
-  CFE_URL = "https://github.com/F5Networks/f5-cloud-failover-extension/releases/download/v1.13.0/f5-cloud-failover-1.13.0-0.noarch.rpm"
+  DO_URL   = "https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v1.36.0/f5-declarative-onboarding-1.36.0-4.noarch.rpm"
+  AS3_URL  = "https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v3.43.0/f5-appsvcs-3.43.0-2.noarch.rpm"
+  TS_URL   = "https://github.com/F5Networks/f5-telemetry-streaming/releases/download/v1.32.0/f5-telemetry-1.32.0-2.noarch.rpm"
+  CFE_URL  = "https://github.com/F5Networks/f5-cloud-failover-extension/releases/download/v1.13.0/f5-cloud-failover-1.13.0-0.noarch.rpm"
   FAST_URL = "https://github.com/F5Networks/f5-appsvcs-templates/releases/download/v1.24.0/f5-appsvcs-templates-1.24.0-1.noarch.rpm"
-  INIT_URL= "https://github.com/F5Networks/f5-bigip-runtime-init/releases/download/1.5.2/f5-bigip-runtime-init-1.5.2-1.gz.run"
+  INIT_URL = "https://github.com/F5Networks/f5-bigip-runtime-init/releases/download/1.5.2/f5-bigip-runtime-init-1.5.2-1.gz.run"
 
 }
