@@ -1,0 +1,24 @@
+{{ with secret "pki_int/issue/maniak-dot-academy" "common_name=application123.maniak.academy"}}
+[
+    {
+        "op": "replace",
+        "path": "/Common/Shared/webcert/remark",
+        "value": "Updated on {{ timestamp }}"
+    },
+    {
+        "op": "replace",
+        "path": "/Common/Shared/webcert/certificate",
+        "value": "{{ .Data.certificate | toJSON | replaceAll "\"" "" }}"
+    },
+    {
+        "op": "replace",
+        "path": "/Common/Shared/webcert/privateKey",
+        "value": "{{ .Data.private_key | toJSON | replaceAll "\"" "" }}"
+    },
+    {
+        "op": "replace",
+        "path": "/Common/Shared/webcert/chainCA",
+        "value": "{{ .Data.issuing_ca | toJSON | replaceAll "\"" "" }}"
+    }
+]
+{{ end }}

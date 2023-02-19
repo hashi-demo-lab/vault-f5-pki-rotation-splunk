@@ -1,0 +1,29 @@
+{{ with secret "pki_int/issue/maniak-dot-academy" "common_name=application123.maniak.academy"}}
+{
+    "class": "AS3",
+    "action": "deploy",
+    "persist": true,
+    "declaration": {
+        "class": "ADC",
+        "schemaVersion": "3.0.0",
+        "id": "123abc",
+        "label": "Automate certificate lifecycle",
+        "remark": "Automate certificate lifecycle",
+        "Common": {
+            "class": "Tenant",
+            "Shared": {
+                "class": "Application",
+                "template": "shared",
+                "application123": {
+                    "class": "Certificate",
+                    "label": "Demo Webcert",
+                    "remark": "Initialize",
+                    "certificate": "{{ .Data.certificate | toJSON | replaceAll "\"" "" }}",
+                    "privateKey": "{{ .Data.private_key | toJSON | replaceAll "\"" "" }}",
+                    "chainCA": "{{ .Data.issuing_ca | toJSON | replaceAll "\"" "" }}"
+                }
+            }
+        }
+    }
+}
+{{ end }}
