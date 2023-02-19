@@ -1,0 +1,17 @@
+---
+schemaVersion: "2.2"
+description: "Install and configure Vault Agent with AppRole authentication"
+mainSteps:
+  - action: "aws:runShellScript"
+    name: "install_vault_agent"
+    inputs:
+      runCommand:
+        - |
+          cd /tmp
+          sudo apt update
+          sudo apt install git
+          git clone https://github.com/hashicorp-demo-lab/Vault-F5-PKI-Rotation-Splunk
+          wget https://releases.hashicorp.com/vault/1.13.0-rc1/vault_1.13.0-rc1_linux_amd64.zip
+          unzip vault_1.13.0-rc1_linux_amd64.zip
+          sudo mv vault /usr/local/bin/
+    timeoutSeconds: 300
