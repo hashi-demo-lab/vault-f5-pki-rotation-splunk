@@ -62,11 +62,11 @@ resource "vault_pki_secret_backend_config_urls" "config_urls_int" {
   crl_distribution_points = ["${var.vault_fqdn}/v1/${vault_mount.pki_intermediate.path}/crl"]
 }
 
-
+/* 
 resource "vault_auth_backend" "cert" {
   path = "cert"
   type = "cert"
-}
+} */
 
 # resource "vault_cert_auth_backend_role" "cert" {
 #     name           = "foo"
@@ -99,6 +99,18 @@ resource "vault_mount" "kvv2" {
   type        = "kv"
   options     = { version = "2" }
   description = "KV Version 2 secret engine mount"
+}
+
+resource "vault_kv_secret_v2" "f5" {
+  mount                      = vault_mount.kvv2.path
+  name                       = "f5admin"
+
+  data_json                  = jsonencode(
+  {
+    "f5admin"       = var.f5admin,
+    "f5password"    = var.f5password
+  }
+  )
 }
 
 #Create Policy from file /vault_policy/cert-policy.hcl - POLICY NEEDS UPDATES

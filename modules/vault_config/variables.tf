@@ -17,3 +17,18 @@ variable "vault_token" {
   default = ""
   sensitive = true
 }
+
+
+variable "f5admin" {
+  description = "F5 admin username"
+  type = string
+  default = ""
+  sensitive = true
+}
+
+variable "f5password" {
+  description = "F5 API password"
+  type = string
+  default = ""
+  sensitive = true
+}

@@ -47,10 +47,10 @@ locals {
 }
 
 resource "aws_ssm_document" "run_script_document" {
-  name   = "vault_script_document"
-  document_type = "Command"
+  name            = "vault_script_document"
+  document_type   = "Command"
   document_format = "YAML"
-  content       = local.ssm_document_content
+  content         = local.ssm_document_content
 }
 
 resource "aws_ssm_association" "example" {
@@ -106,6 +106,6 @@ module "bigip" {
 module "hcp-vault-config" {
   source = "./modules/vault_config/"
 
-  vault_fqdn = local.vault_fqdn
+  vault_fqdn  = local.vault_fqdn
   vault_token = local.vault_token
 }
