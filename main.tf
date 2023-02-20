@@ -100,3 +100,12 @@ module "bigip" {
   INIT_URL = "https://github.com/F5Networks/f5-bigip-runtime-init/releases/download/1.5.2/f5-bigip-runtime-init-1.5.2-1.gz.run"
 
 }
+
+
+// hcp vault
+module "hcp-vault-config" {
+  source = "./modules/vault_config/"
+
+  vault_fqdn = local.vault_fqdn
+  vault_token = local.vault_token
+}
