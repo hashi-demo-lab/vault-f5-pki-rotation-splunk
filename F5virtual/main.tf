@@ -17,9 +17,9 @@ resource "bigip_ltm_node" "node" {
 }
 
 resource "bigip_ltm_pool_attachment" "attach_node" {
-  
+  for_each = bigip_ltm_node.node
   pool = bigip_ltm_pool.pool.name
-  node = "${bigip_ltm_node.node.name}:80"
+  node = "${bigip_ltm_node.node[each.key].name}:80"
 }
 
 

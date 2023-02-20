@@ -8,5 +8,6 @@ terraform {
 }
 
 provider "bigip" {
-  # Configuration options
+  address = var.f5_mgmtPublicDNS
+  username = var.f5_username
 }
