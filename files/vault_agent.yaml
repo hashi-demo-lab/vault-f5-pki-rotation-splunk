@@ -7,15 +7,17 @@ mainSteps:
     inputs:
       timeoutSeconds: '700'
       runCommand:
-      - sudo apt update -y
+      - sudo apt update
+      - sleep 10
+      - sudo apt update
       - cd /tmp
-      - sudo apt install unzip -y
-      - sudo apt install git -y
-      - sudo apt install nginx -y
+      - sudo apt install unzip
+      - sudo apt install git
       - git clone https://github.com/hashicorp-demo-lab/vault-f5-pki-rotation-splunk
-      - wget https://releases.hashicorp.com/vault/1.13.0-rc1/vault_1.13.0-rc1_linux_amd64.zip
-      - unzip vault_1.13.0-rc1_linux_amd64.zip
+      - sudo wget https://releases.hashicorp.com/vault/1.13.0-rc1/vault_1.13.0-rc1_linux_amd64.zip
+      - sudo unzip vault_1.13.0-rc1_linux_amd64.zip
       - sudo mv vault /usr/local/bin/
       - sudo mv /tmp/vault-f5-pki-rotation-splunk /home/ubuntu/vault-f5-pki-rotation-splunk
-      - echo "# DO NOT DO THIS - DEMO ONLY" >> /home/ubuntu/startVaultAgent.sh
-      - echo "vault -config=/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/" >> /home/ubuntu/startVaultAgent.sh
+      - sudo echo "# DO NOT DO THIS - DEMO ONLY" >> /tmp/startVaultAgent.sh
+      - sudo echo "vault -config=/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/" >> /tmp/startVaultAgent.sh
+      - sudo chmod u+x /tmp/startVaultAgent.sh
