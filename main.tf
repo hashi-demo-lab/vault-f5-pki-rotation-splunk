@@ -73,11 +73,10 @@ module "hcp-vault" {
 }
 
 
-
 # F5VE using AWS Marketplace - min size and speed for lowest cost
 module "bigip" {
   depends_on = [
-    module.infra-aws
+    module.infra-aws.public_subnet_ids
   ]
   source  = "F5Networks/bigip-module/aws"
   version = "1.1.10"
