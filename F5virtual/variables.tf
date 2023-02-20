@@ -13,7 +13,7 @@ variable "vip_ip" {
 
 variable "node_list" {
     type = list(string)
-    description = "prefix used for f5 resource create uniqueness"
+    description = "list of node IP addresses"
     default = ["192.168.10.2"]
 }
 
