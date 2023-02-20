@@ -9,6 +9,7 @@ mainSteps:
       runCommand:
       - sudo apt update
       - cd /tmp
+      - sudo apt install unzip
       - sudo apt install git
       - sudo apt install nginx -y
       - git clone https://github.com/hashicorp-demo-lab/Vault-F5-PKI-Rotation-Splunk
