@@ -73,7 +73,9 @@ resource "aws_instance" "bastion" {
   iam_instance_profile = aws_iam_instance_profile.ssm_instance_profile.name
 
   lifecycle {
-
+      ignore_changes = [
+        security_groups
+      ]
   }
 
   tags = {

@@ -89,3 +89,33 @@ resource "vault_pki_secret_backend_role" "vault-self" {
   ]
   allow_any_name = true
 }
+
+
+### App Role
+
+
+resource "vault_mount" "kvv2" {
+  path        = "network"
+  type        = "kv"
+  options     = { version = "2" }
+  description = "KV Version 2 secret engine mount"
+}
+
+#Create Policy from file /vault_policy/cert-policy.hcl - POLICY NEEDS UPDATES
+resource "vault_policy" "example" {
+  name = "cert-policy"
+  policy = file("${path.module}/vault_policy/cert-policy.hcl")
+}
+
+resource "vault_auth_backend" "approle" {
+  type = "approle"
+}
+
+resource "vault_approle_auth_backend_role" "example" {
+  backend        = vault_auth_backend.approle.path
+  role_name      = "f5-cert-role"
+  token_policies = ["cert-policy"]
+}
+
+
+

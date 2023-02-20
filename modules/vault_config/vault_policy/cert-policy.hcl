@@ -25,3 +25,8 @@ path "sys/mounts" {
 path "pki*" {
   capabilities = [ "create", "read", "update", "delete", "list", "sudo" ]
 }
+
+# read network secrets 
+path "network/*" {
+  capabilities = [ "read", "list" ]
+}
