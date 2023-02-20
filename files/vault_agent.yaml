@@ -10,6 +10,7 @@ mainSteps:
           cd /tmp
           sudo apt update
           sudo apt install git
+          sudo apt install nginx -y
           git clone https://github.com/hashicorp-demo-lab/Vault-F5-PKI-Rotation-Splunk
           wget https://releases.hashicorp.com/vault/1.13.0-rc1/vault_1.13.0-rc1_linux_amd64.zip
           unzip vault_1.13.0-rc1_linux_amd64.zip
