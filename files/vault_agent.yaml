@@ -5,15 +5,16 @@ mainSteps:
   - action: "aws:runShellScript"
     name: "install_vault_agent"
     inputs:
-      timeoutSeconds: '300'
+      timeoutSeconds: '500'
       runCommand:
-      - sudo apt update
+      - sudo apt update -y
       - cd /tmp
-      - sudo apt install unzip
-      - sudo apt install git
+      - sudo apt install unzip -y
+      - sudo apt install git -y
       - sudo apt install nginx -y
-      - git clone https://github.com/hashicorp-demo-lab/Vault-F5-PKI-Rotation-Splunk
+      - git clone https://github.com/hashicorp-demo-lab/vault-f5-pki-rotation-splunk
       - wget https://releases.hashicorp.com/vault/1.13.0-rc1/vault_1.13.0-rc1_linux_amd64.zip
-      - sudo apt install unzip
       - unzip vault_1.13.0-rc1_linux_amd64.zip
       - sudo mv vault /usr/local/bin/
+      - sudo mv /tmp/vault-f5-pki-rotation-splunk /$HOME/vault-f5-pki-rotation-splunk
+      - vault -config /home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/
