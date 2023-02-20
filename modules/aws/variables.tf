@@ -89,11 +89,11 @@ variable "hcp_hvn_cidr" {
 variable "mgmt_ingress_rules" {
   description = "Management security group ingress rules"
   type = list(any)
-  default = ["https-443-tcp","ssh-tcp","https-8443-tcp"]
+  default = ["http-80-tcp","https-443-tcp","ssh-tcp","https-8443-tcp"]
 }
 
 variable "mgmt_egress_rules" {
   description = "Management security group egress rules"
   type = list(any)
-  default = ["https-443-tcp","ssh-tcp","https-8443-tcp"]
+  default = ["http-80-tcp","https-443-tcp","ssh-tcp","https-8443-tcp"]
 }
