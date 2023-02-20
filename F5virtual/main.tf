@@ -3,7 +3,7 @@
 
 #LTM Pool and node attachment
 resource "bigip_ltm_pool" "pool" {
-  name                = "/Common/${var.app_prefix}-pool"
+  name                = "/Common/${var.app_prefix}_pool"
   load_balancing_mode = "round-robin"
   monitors            = []
   allow_snat          = "yes"
@@ -25,7 +25,7 @@ resource "bigip_ltm_pool_attachment" "attach_node" {
 
 # Create F5 virtual server
 resource "bigip_ltm_virtual_server" "https" {
-  name = "/Common/${var.app_prefix}-vs_https"
+  name = "/Common/${var.app_prefix}_vs_https"
   destination = "${var.vip_ip}"
   port = 443
   pool = bigip_ltm_pool.pool.name
