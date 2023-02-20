@@ -1,7 +1,7 @@
 pid_file = "./pidfile"
 
 vault {
-   address = "http://192.168.86.247:8200"
+   address = "https://hcp-vault-demo-public-vault-457f3ef0.5ef008f8.z1.hashicorp.cloud:8200"
 }
 
 auto_auth {
@@ -22,12 +22,12 @@ auto_auth {
 }
 
 template {
-  source      = "./certs.ctmpl"
+  source      = "/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/certs.ctmpl"
   destination = "./certs.json"
   command = "bash f5-magic.sh"
 }
 
 template {
-    source = "./certmanagement.tmpl"
+    source = "/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/certmanagement.tmpl"
     destination = "./certmanagement.json"
 }
