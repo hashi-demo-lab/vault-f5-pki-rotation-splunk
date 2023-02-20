@@ -12,7 +12,7 @@ resource "bigip_ltm_pool" "pool" {
 
 resource "bigip_ltm_node" "node" {
   for_each = toset(var.node_list)
-  name    = "/Common/${var.app_prefix}-node"
+  name    = "/Common/${each.value}"
   address = each.value
 }
 
@@ -23,15 +23,15 @@ resource "bigip_ltm_pool_attachment" "attach_node" {
 }
 
 
-/* # Create F5 virtual server
+# Create F5 virtual server
 resource "bigip_ltm_virtual_server" "https" {
-  name = "/Common/terraform_vs_https"
+  name = "/Common/${var.app_prefix}-vs_https"
   destination = "${var.vip_ip}"
   port = 443
-  pool = "${var.pool}"
-  profiles = ["/Common/tcp","/Common/my-awesome-ssl-cert","/Common/http"]
+  pool = bigip_ltm_pool.pool.name
+  profiles = []
   source_address_translation = "automap"
-} */
+} 
 
 
 

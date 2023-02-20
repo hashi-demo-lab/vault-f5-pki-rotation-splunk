@@ -4,6 +4,12 @@ variable "app_prefix" {
     default = "demoapp"
 }
 
+variable "vip_ip" {
+    type = string
+    description = "Virtual Server IP"
+    default = "10.200.10.50"
+}
+
 
 variable "node_list" {
     type = list(string)
