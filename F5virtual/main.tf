@@ -11,11 +11,13 @@ resource "bigip_ltm_pool" "pool" {
 }
 
 resource "bigip_ltm_node" "node" {
+  for_each = toset(var.node_list)
   name    = "/Common/${var.app_prefix}-node"
-  address = "192.168.30.2"
+  address = each.value
 }
 
 resource "bigip_ltm_pool_attachment" "attach_node" {
+  
   pool = bigip_ltm_pool.pool.name
   node = "${bigip_ltm_node.node.name}:80"
 }
