@@ -21,8 +21,8 @@ provider "hcp" {
 
 }
 
-provider "vault" {
+/* provider "vault" {
   address = local.vault_fqdn
   token   = local.vault_token
 }
-
+ */

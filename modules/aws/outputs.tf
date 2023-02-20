@@ -28,7 +28,7 @@ output "ram_resource_share_arn" {
 
 output "bastion_public_fqdn" {
   description = "Public fqdn of bastion"
-  value       = aws_instance.bastion.public_dns
+  value       = aws_eip.main.public_dns
 }
 
 output "bastion_ec2_instance_id" {
