@@ -3,16 +3,19 @@ schemaVersion: "2.2"
 description: "Install and configure Vault Agent"
 mainSteps:
   - action: "aws:runShellScript"
-    name: "install_vault_agent"
+    name: "update"
     inputs:
       timeoutSeconds: '700'
       runCommand:
-      - sudo apt update
-      - sleep 10
-      - sudo apt update
+      - sudo DEBIAN_FRONTEND=noninteractive apt update
+      - sudo DEBIAN_FRONTEND=noninteractive apt install unzip
+      - sudo DEBIAN_FRONTEND=noninteractive apt install git
+  - action: "aws:runShellScript"
+    name: "configure"
+    inputs:
+      timeoutSeconds: '700'
+      runCommand:
       - cd /tmp
-      - sudo apt install unzip
-      - sudo apt install git
       - git clone https://github.com/hashicorp-demo-lab/vault-f5-pki-rotation-splunk
       - sudo wget https://releases.hashicorp.com/vault/1.13.0-rc1/vault_1.13.0-rc1_linux_amd64.zip
       - sudo unzip vault_1.13.0-rc1_linux_amd64.zip
