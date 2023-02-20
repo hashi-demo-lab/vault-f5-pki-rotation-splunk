@@ -30,3 +30,8 @@ output "bastion_public_fqdn" {
   description = "Public fqdn of bastion"
   value       = aws_instance.bastion.public_dns
 }
+
+output "bastion_ec2_instance_id" {
+  description = "ec2 instance id"
+  value = aws_instance.bastion.id
+}

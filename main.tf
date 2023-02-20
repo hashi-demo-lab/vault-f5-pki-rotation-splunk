@@ -41,6 +41,28 @@ module "infra-aws" {
   aws_key_pair_key_name       = var.aws_key_pair_key_name
 }
 
+//SSM Doc for Vault agent pre-reqs
+locals {
+  ssm_document_content = file("${path.module}/files/vault_agent.yaml")
+}
+
+resource "aws_ssm_document" "run_script_document" {
+  name   = "vault_script_document"
+  document_type = "Command"
+  document_format = "YAML"
+  content       = local.ssm_document_content
+}
+
+resource "aws_ssm_association" "example" {
+  name = aws_ssm_document.run_script_document.name
+
+  targets {
+    key    = "InstanceIds"
+    values = [module.infra-aws.bastion_ec2_instance_id]
+  }
+}
+
+
 // hcp vault
 module "hcp-vault" {
   source = "./modules/vault/"
