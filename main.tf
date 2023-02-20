@@ -102,7 +102,7 @@ module "bigip" {
 }
 
 
-// hcp vault
+// hcp vault configuration
 module "hcp-vault-config" {
   source = "./modules/vault_config/"
 
