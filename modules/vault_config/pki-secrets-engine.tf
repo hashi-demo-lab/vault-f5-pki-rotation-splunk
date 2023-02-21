@@ -125,7 +125,7 @@ resource "vault_auth_backend" "approle" {
 
 resource "vault_approle_auth_backend_role" "cert" {
   backend        = vault_auth_backend.approle.path
-  role_name      = "f5-cert-role"
+  role_name      = "f5-device-role"
   token_policies = ["cert-policy"]
 }
 

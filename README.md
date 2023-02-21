@@ -15,3 +15,16 @@ export HCP_CLIENT_SECRET=""
 
 terraform apply --auto-approve -target module.hcp-vault; terraform apply --auto-approve
 ```
+
+```sh
+# export environment variables
+export VAULT_NAMESPACE=admin
+export VAULT_ADDR=''
+export VAULT_TOKEN=''
+```
+
+```sh
+#Get roleid and secret-id
+vault read -format=json auth/approle/role/f5-device-role/role-id | jq -r '.data.role_id' > roleID
+vault write -f -format=json auth/approle/role/f5-device-role/secret-id | jq -r '.data.secret_id' > secretID
+```
