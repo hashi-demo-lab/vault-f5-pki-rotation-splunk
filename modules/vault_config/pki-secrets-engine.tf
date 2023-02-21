@@ -123,7 +123,7 @@ resource "vault_auth_backend" "approle" {
   type = "approle"
 }
 
-resource "vault_approle_auth_backend_role" "example" {
+resource "vault_approle_auth_backend_role" "cert" {
   backend        = vault_auth_backend.approle.path
   role_name      = "f5-cert-role"
   token_policies = ["cert-policy"]
