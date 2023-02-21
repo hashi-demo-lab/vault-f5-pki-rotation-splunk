@@ -22,7 +22,7 @@ variable "vault_token" {
 variable "f5admin" {
   description = "F5 admin username"
   type = string
-  default = ""
+  default = "bigipuser"
   sensitive = true
 }
 
@@ -32,3 +32,4 @@ variable "f5password" {
   default = ""
   sensitive = true
 }
+
