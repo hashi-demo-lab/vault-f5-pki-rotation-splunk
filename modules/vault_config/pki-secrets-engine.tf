@@ -90,10 +90,19 @@ resource "vault_pki_secret_backend_role" "vault-self" {
   allow_any_name = true
 }
 
+## Create F5-Device-pki role
+resource "vault_pki_secret_backend_role" "role" {
+  backend          = vault_mount.pki_intermediate.path
+  name             = "f5demo"
+  ttl              = 3600
+  allow_ip_sans    = true
+  key_type         = "rsa"
+  key_bits         = 4096
+  allowed_domains  = ["prod.f5demo.com", "test.f56demo.com","dev.f5demo.com" ,"f5demo.com"]
+  allow_subdomains = true
+}
 
-### App Role
-
-
+# KV for F5 Device Credentials
 resource "vault_mount" "kvv2" {
   path        = "network"
   type        = "kv"
@@ -119,6 +128,8 @@ resource "vault_policy" "example" {
   policy = file("${path.module}/vault_policy/cert-policy.hcl")
 }
 
+
+### App Role
 resource "vault_auth_backend" "approle" {
   type = "approle"
 }

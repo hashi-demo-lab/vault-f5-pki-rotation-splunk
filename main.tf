@@ -109,6 +109,6 @@ module "hcp-vault-config" {
 
   vault_fqdn  = local.vault_fqdn
   vault_token = local.vault_token
-  f5admin = module.bigip.f5_username
-  f5password = module.bigip.bigip_password
+  f5admin     = module.bigip.f5_username
+  f5password  = module.bigip.bigip_password
 }
