@@ -1,4 +1,4 @@
-{{ with secret "pki_int/issue/maniak-dot-academy" "common_name=application123.maniak.academy"}}
+{{ with pkiCert "pki_intermediate/issue/f5demo" "common_name=f5demo.com"}}
 {
     "class": "AS3",
     "action": "deploy",
