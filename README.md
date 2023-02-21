@@ -17,14 +17,22 @@ terraform apply --auto-approve -target module.hcp-vault; terraform apply --auto-
 ```
 
 ```sh
-# export environment variables
+# export environment variables, namespace is required for HCP
+
 export VAULT_NAMESPACE=admin
 export VAULT_ADDR='https://hcp-vault-demo-public-vault-7a4fb99b.6adbf943.z1.hashicorp.cloud:8200'
 export VAULT_TOKEN=''
 ```
 
 ```sh
-#Get AppRole roleid and secret-id
+#AppRole - Get roleid and secret-id
+
 vault read -format=json auth/approle/role/f5-device-role/role-id | jq -r '.data.role_id' > ../roleID
-vault write -f -format=json auth/approle/role/f5-device-role/secret-id | jq -r '.data.secret_id' > ../secretID
+vault write -f -format=json auth/approle/role/f5-device-role/secret-id | jq -r '.data.secret_id' > secretID
+```
+
+```sh
+#start Vault Agent with directory config using multiple agent templates
+
+vault agent -config=/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/
 ```
