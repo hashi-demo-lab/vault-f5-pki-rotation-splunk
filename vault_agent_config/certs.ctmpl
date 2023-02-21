@@ -8,17 +8,17 @@
     {
         "op": "replace",
         "path": "/Common/Shared/webcert/certificate",
-        "value": "{{ .Data.certificate | toJSON | replaceAll "\"" "" }}"
+        "value": "{{ .Data.Cert | toJSON | replaceAll "\"" "" }}"
     },
     {
         "op": "replace",
         "path": "/Common/Shared/webcert/privateKey",
-        "value": "{{ .Data.private_key | toJSON | replaceAll "\"" "" }}"
+        "value": "{{ .Data.Key | toJSON | replaceAll "\"" "" }}"
     },
     {
         "op": "replace",
         "path": "/Common/Shared/webcert/chainCA",
-        "value": "{{ .Data.issuing_ca | toJSON | replaceAll "\"" "" }}"
+        "value": "{{ .Data.CA | toJSON | replaceAll "\"" "" }}"
     }
 ]
 {{ end }}

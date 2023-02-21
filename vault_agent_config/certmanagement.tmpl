@@ -18,9 +18,9 @@
                     "class": "Certificate",
                     "label": "Demo Webcert",
                     "remark": "Initialize",
-                    "certificate": "{{ .Data.certificate | toJSON | replaceAll "\"" "" }}",
-                    "privateKey": "{{ .Data.private_key | toJSON | replaceAll "\"" "" }}",
-                    "chainCA": "{{ .Data.issuing_ca | toJSON | replaceAll "\"" "" }}"
+                    "certificate": "{{ .Data.Cert | toJSON | replaceAll "\"" "" }}",
+                    "privateKey": "{{ .Data.Key | toJSON | replaceAll "\"" "" }}",
+                    "chainCA": "{{ .Data.CA | toJSON | replaceAll "\"" "" }}"
                 }
             }
         }
