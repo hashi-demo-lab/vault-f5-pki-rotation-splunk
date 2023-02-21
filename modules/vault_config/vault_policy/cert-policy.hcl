@@ -27,6 +27,6 @@ path "pki*" {
 }
 
 # read network secrets 
-path "network/*" {
+path "network/data/*" {
   capabilities = [ "read", "list" ]
 }
