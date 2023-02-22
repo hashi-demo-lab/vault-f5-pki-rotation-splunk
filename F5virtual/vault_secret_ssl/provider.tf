@@ -8,5 +8,5 @@ terraform {
 }
 
 provider "vault" {
-  # Configuration options
+  namespace = "admin"
 }
