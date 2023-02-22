@@ -18,10 +18,6 @@ locals {
   trim_ca_chain = trim(local.full.ca_chain[0],"\n")
 }
 
-output "ca_chain" {
-  value = local.full.ca_chain[0]
-}
-
 resource "bigip_ssl_key" "my_key" {
   name      = "${var.app_prefix}.key"
   content   = local.trimPrivate
@@ -43,12 +39,9 @@ resource "bigip_ssl_certificate" "my_chain" {
 resource "bigip_ltm_profile_client_ssl" "my_profile" {
   name           = "/${var.f5_partition}/clientssl_${var.app_prefix}"
   defaults_from  = "/Common/clientssl"
-  cert_key_chain {
-    name  = bigip_ssl_certificate.my_cert.name
-    cert  = "/${var.f5_partition}/${bigip_ssl_certificate.my_cert.name}"
-    key   = "/${var.f5_partition}/${bigip_ssl_key.my_key.name}"
-    chain = "/${var.f5_partition}/${bigip_ssl_certificate.my_chain.name}"
-  }
+  cert  = "/${var.f5_partition}/${bigip_ssl_certificate.my_cert.name}"
+  key   = "/${var.f5_partition}/${bigip_ssl_key.my_key.name}"
+  chain = "/${var.f5_partition}/${bigip_ssl_certificate.my_chain.name}"
 }
 
 #LTM Pool and node attachment

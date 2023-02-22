@@ -8,23 +8,30 @@ resource "vault_generic_endpoint" "pki" {
     "common_name": "${var.common_name}"
   }
   EOT
-} 
+}
+
+locals {
+  trimPrivate = trim(vault_generic_endpoint.pki.write_data.private_key,"\n")
+  trimCert = trim(vault_generic_endpoint.pki.write_data.certificate,"\n")
+  full = jsondecode(vault_generic_endpoint.pki.write_data_json)
+  trim_ca_chain = trim(local.full.ca_chain[0],"\n")
+}
 
 resource "bigip_ssl_certificate" "myapp" {
   name      = "${var.app_prefix}-myapp.crt"
-  content   = chomp(vault_generic_endpoint.pki.write_data.certificate)
+  content   = local.trimCert
   partition = "Common"
 }
 
-resource "bigip_ssl_key" "app4key" {
+resource "bigip_ssl_key" "myapp" {
   name      = "${var.app_prefix}-myapp.key"
-  content   = chomp(vault_generic_endpoint.pki.write_data.private_key)
+  content   = local.trimPrivate
   partition = "Common"
 }
 
 resource "bigip_fast_https_app" "this" {
   application               = "${var.app_prefix}-myapp"
-  tenant                    = "scenario4"
+  tenant                    = "mytenant"
   virtual_server            {
     ip                        = "10.1.10.224"
     port                      = 443
