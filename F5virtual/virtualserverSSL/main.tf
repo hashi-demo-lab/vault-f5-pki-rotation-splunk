@@ -1,21 +1,30 @@
-
+resource "vault_generic_endpoint" "pki" {
+  path = "${var.pki_intermediate_path}/issue/${var.pki_role}"
+  write_fields = ["ca_chain","certificate","expiration","private_key","private_key_type"]
+  disable_read = true
+  data_json = <<EOT
+  {
+    "common_name": "${var.common_name}"
+  }
+  EOT
+} 
 
 
 resource "bigip_ssl_key" "my_key" {
   name      = "${var.app_prefix}.key"
-  content   = venafi_certificate.tls_server.private_key_pem
+  content   = vault_generic_endpoint.pki.write_data.private_key
   partition = var.f5_partition
 }
 
 resource "bigip_ssl_certificate" "my_cert" {
   name      = "${var.app_prefix}.crt"
-  content   = venafi_certificate.tls_server.certificate
+  content   = vault_generic_endpoint.pki.write_data.certificate
   partition = var.f5_partition
 }
 
 resource "bigip_ssl_certificate" "my_chain" {
   name      = "${var.app_prefix}-ca-bundle.crt"
-  content   = venafi_certificate.tls_server.chain
+  content   = vault_generic_endpoint.pki.write_data.ca_chain
   partition = var.f5_partition
 }
 

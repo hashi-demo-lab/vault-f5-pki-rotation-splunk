@@ -11,3 +11,7 @@ provider "bigip" {
   address = var.f5_mgmtPublicDNS
   username = var.f5_username
 }
+
+provider "vault" {
+  namespace = "admin"
+}

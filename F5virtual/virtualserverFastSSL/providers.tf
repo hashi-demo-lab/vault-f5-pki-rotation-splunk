@@ -12,3 +12,7 @@ provider "bigip" {
   username = var.f5_username
   password = var.password
 }
+
+provider "vault" {
+  namespace = "admin"
+}
