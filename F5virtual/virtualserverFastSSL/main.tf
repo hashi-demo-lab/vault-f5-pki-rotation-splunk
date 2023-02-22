@@ -1,6 +1,19 @@
+resource "vault_generic_endpoint" "pki" {
+  path = "${var.pki_intermediate_path}/issue/${var.pki_role}"
+  disable_read = true
+  write_fields = [  ]
+  data_json = <<EOT
+  {
+    "common_name": "${var.common_name}"
+  }
+  EOT
+
+} 
+
+
 resource "bigip_ssl_certificate" "app4crt" {
   name      = "app4.crt"
-  content   = file("app4.crt")
+  content   = vault_generic_endpoint.pki.write_data_json
   partition = "Common"
 }
 

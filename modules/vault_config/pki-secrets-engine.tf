@@ -98,7 +98,7 @@ resource "vault_pki_secret_backend_role" "role" {
   allow_ip_sans    = true
   key_type         = "rsa"
   key_bits         = 4096
-  allowed_domains  = ["prod.f5demo.com", "test.f56demo.com","dev.f5demo.com" ,"f5demo.com"]
+  allowed_domains  = ["f5demo.com"]
   allow_subdomains = true
 }
 
