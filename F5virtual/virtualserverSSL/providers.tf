@@ -10,6 +10,7 @@ terraform {
 provider "bigip" {
   address = var.f5_mgmtPublicDNS
   username = var.f5_username
+  password = var.f5_password
 }
 
 provider "vault" {

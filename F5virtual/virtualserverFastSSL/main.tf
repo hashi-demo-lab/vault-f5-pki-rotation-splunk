@@ -1,5 +1,6 @@
 resource "vault_generic_endpoint" "pki" {
   path = "${var.pki_intermediate_path}/issue/${var.pki_role}"
+  disable_delete = true
   write_fields = ["ca_chain","certificate","expiration","private_key","private_key_type"]
   disable_read = true
   data_json = <<EOT
@@ -11,13 +12,13 @@ resource "vault_generic_endpoint" "pki" {
 
 resource "bigip_ssl_certificate" "myapp" {
   name      = "${var.app_prefix}-myapp.crt"
-  content   = vault_generic_endpoint.pki.write_data.certificate
+  content   = chomp(vault_generic_endpoint.pki.write_data.certificate)
   partition = "Common"
 }
 
 resource "bigip_ssl_key" "app4key" {
   name      = "${var.app_prefix}-myapp.key"
-  content   = vault_generic_endpoint.pki.write_data.private_key
+  content   = chomp(vault_generic_endpoint.pki.write_data.private_key)
   partition = "Common"
 }
 

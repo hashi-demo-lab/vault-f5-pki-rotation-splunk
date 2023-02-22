@@ -20,7 +20,7 @@ variable "node_list" {
 variable "f5_mgmtPublicDNS" {
     type = string
     description = "F5 management address"
-    default = "ec2-54-153-133-171.ap-southeast-2.compute.amazonaws.com:8443"
+    default = "ec2-54-253-52-151.ap-southeast-2.compute.amazonaws.com:8443"
     sensitive = true
 }
 
@@ -28,6 +28,12 @@ variable "f5_username" {
     type = string
     description = "F5 management username"
     default = "bigipuser"
+    sensitive = true
+}
+
+variable "f5_password" {
+    type = string
+    description = "F5 management password"
     sensitive = true
 }
 

@@ -1,5 +1,6 @@
 resource "vault_generic_endpoint" "pki" {
   path = "${var.pki_intermediate_path}/issue/${var.pki_role}"
+  disable_delete = true
   write_fields = ["ca_chain","certificate","expiration","private_key","private_key_type"]
   disable_read = true
   data_json = <<EOT
@@ -10,21 +11,29 @@ resource "vault_generic_endpoint" "pki" {
 } 
 
 
+locals {
+  trimPrivate = trim(vault_generic_endpoint.pki.write_data.private_key,"\n")
+  trimCert = trim(vault_generic_endpoint.pki.write_data.certificate,"\n")
+  trimCA = trim(vault_generic_endpoint.pki.write_data.ca_chain,"\n")
+}
+
 resource "bigip_ssl_key" "my_key" {
   name      = "${var.app_prefix}.key"
-  content   = vault_generic_endpoint.pki.write_data.private_key
+  content   = local.trimPrivate
   partition = var.f5_partition
 }
 
 resource "bigip_ssl_certificate" "my_cert" {
   name      = "${var.app_prefix}.crt"
-  content   = vault_generic_endpoint.pki.write_data.certificate
+  content   = local.trimCert
   partition = var.f5_partition
 }
 
+
+
 resource "bigip_ssl_certificate" "my_chain" {
-  name      = "${var.app_prefix}-ca-bundle.crt"
-  content   = vault_generic_endpoint.pki.write_data.ca_chain
+  name      = "${var.app_prefix}cabundle.crt"
+  content   = local.trimCA
   partition = var.f5_partition
 }
 
@@ -35,7 +44,7 @@ resource "bigip_ltm_profile_client_ssl" "my_profile" {
     name  = bigip_ssl_certificate.my_cert.name
     cert  = "/${var.f5_partition}/${bigip_ssl_certificate.my_cert.name}"
     key   = "/${var.f5_partition}/${bigip_ssl_key.my_key.name}"
-    chain = "/${var.f5_partition}/${bigip_ssl_certificate.my_chain.name}"
+   # chain = "/${var.f5_partition}/${bigip_ssl_certificate.my_chain.name}"
   }
 }
 
@@ -70,16 +79,3 @@ resource "bigip_ltm_virtual_server" "https" {
   profiles = []
   source_address_translation = "automap"
 } 
-
-
-
-/* 
-# Create F5 SSL certificate from Vault
-resource "f5_ssl_certificate" "myapp" {
-  name          = "myapp_ssl_certificate"
-  content       = "${data.vault_generic_secret.ssl_cert.data.certificate}"
-  key           = "${data.vault_generic_secret.ssl_cert.data.private_key}"
-  intermediates = ["${data.vault_generic_secret.ssl_cert.data.intermediate_cert}"]
-}
-
- */
