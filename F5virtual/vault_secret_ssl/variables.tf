@@ -9,3 +9,9 @@ variable "pki_role" {
     description = "pki role name"
     default =  "f5demo"
 }
+
+variable "common_name" {
+    type = string
+    description = "certificate common name"
+    default = "prod.f5demo.com"
+}

@@ -94,7 +94,7 @@ resource "vault_pki_secret_backend_role" "vault-self" {
 resource "vault_pki_secret_backend_role" "role" {
   backend          = vault_mount.pki_intermediate.path
   name             = "f5demo"
-  ttl              = 3600
+  ttl              = var.cert_ttl_seconds
   allow_ip_sans    = true
   key_type         = "rsa"
   key_bits         = 4096

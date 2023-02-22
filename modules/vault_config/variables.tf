@@ -33,3 +33,9 @@ variable "f5password" {
   sensitive = true
 }
 
+variable "var.cert_ttl_seconds" {
+  description = "value"
+  type = string
+  default = 600 #10 minutes
+}
+
