@@ -14,7 +14,12 @@ resource "vault_generic_endpoint" "pki" {
 locals {
   trimPrivate = trim(vault_generic_endpoint.pki.write_data.private_key,"\n")
   trimCert = trim(vault_generic_endpoint.pki.write_data.certificate,"\n")
-  trimCA = trim(vault_generic_endpoint.pki.write_data.ca_chain,"\n")
+  full = jsondecode(vault_generic_endpoint.pki.write_data_json)
+  trim_ca_chain = trim(local.full.ca_chain[0],"\n")
+}
+
+output "ca_chain" {
+  value = local.full.ca_chain[0]
 }
 
 resource "bigip_ssl_key" "my_key" {
@@ -29,13 +34,11 @@ resource "bigip_ssl_certificate" "my_cert" {
   partition = var.f5_partition
 }
 
-
-
 resource "bigip_ssl_certificate" "my_chain" {
   name      = "${var.app_prefix}cabundle.crt"
-  content   = local.trimCA
+  content   = local.trim_ca_chain
   partition = var.f5_partition
-}
+} 
 
 resource "bigip_ltm_profile_client_ssl" "my_profile" {
   name           = "/${var.f5_partition}/clientssl_${var.app_prefix}"
@@ -44,7 +47,7 @@ resource "bigip_ltm_profile_client_ssl" "my_profile" {
     name  = bigip_ssl_certificate.my_cert.name
     cert  = "/${var.f5_partition}/${bigip_ssl_certificate.my_cert.name}"
     key   = "/${var.f5_partition}/${bigip_ssl_key.my_key.name}"
-   # chain = "/${var.f5_partition}/${bigip_ssl_certificate.my_chain.name}"
+    chain = "/${var.f5_partition}/${bigip_ssl_certificate.my_chain.name}"
   }
 }
 
