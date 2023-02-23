@@ -28,7 +28,7 @@ export VAULT_TOKEN=''
 #AppRole - Get roleid and secret-id
 
 vault read -format=json auth/approle/role/f5-device-role/role-id | jq -r '.data.role_id' > ../roleID
-vault write -f -format=json auth/approle/role/f5-device-role/secret-id | jq -r '.data.secret_id' > secretID
+vault write -f -format=json auth/approle/role/f5-device-role/secret-id | jq -r '.data.secret_id' > ../secretID
 ```
 
 ```sh
