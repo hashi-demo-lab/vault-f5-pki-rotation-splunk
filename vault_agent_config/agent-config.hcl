@@ -22,7 +22,10 @@ auto_auth {
 }
 
 template {
-  source      = "/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/certs.ctmpl"
-  destination = "./certs.json"
-  command = "bash f5-magic.sh"
+  source      = "/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/resttemplate.ctmpl"
+  destination = "./prod_f5_demo_payload.json"
+  exec {
+    command : ["bash", "callPipeline.sh"]
+    timeout : "120s"
+  } 
 }
