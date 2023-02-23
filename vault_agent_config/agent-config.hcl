@@ -26,8 +26,3 @@ template {
   destination = "./certs.json"
   command = "bash f5-magic.sh"
 }
-
-template {
-    source = "/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/certmanagement.tmpl"
-    destination = "./certmanagement.json"
-}
