@@ -24,8 +24,10 @@ auto_auth {
 template {
   source      = "/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/resttemplate.ctmpl"
   destination = "./prod_f5_demo_payload.json"
+  error_on_missing_key=true
+  wait = "10s"
   exec {
-    command : ["bash", "callPipeline.sh"]
+    command : ["python3", "callPipeline.py"]
     timeout : "120s"
   } 
 }
