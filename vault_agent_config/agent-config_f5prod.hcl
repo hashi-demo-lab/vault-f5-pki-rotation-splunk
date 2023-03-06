@@ -6,6 +6,7 @@ vault {
 
 auto_auth {
    method "aws" {
+      namespace = "admin"
       mount_path = "auth/aws"
       config = {
           type = "iam"
