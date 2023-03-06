@@ -111,25 +111,28 @@ resource "vault_mount" "kvv2" {
 }
 
 resource "vault_kv_secret_v2" "f5" {
-  mount                      = vault_mount.kvv2.path
-  name                       = "f5admin"
+  mount = vault_mount.kvv2.path
+  name  = "f5admin"
 
-  data_json                  = jsonencode(
-  {
-    "f5admin"       = var.f5admin,
-    "f5password"    = var.f5password
-  }
+  data_json = jsonencode(
+    {
+      "f5admin"    = var.f5admin,
+      "f5password" = var.f5password
+    }
   )
 }
 
 #Create Policy from file /vault_policy/cert-policy.hcl - POLICY NEEDS UPDATES
 resource "vault_policy" "example" {
-  name = "cert-policy"
+  name   = "cert-policy"
   policy = file("${path.module}/vault_policy/cert-policy.hcl")
 }
 
 
-### App Role
+
+## using AWS auth for end to end demo - for onpremise  TLS or App Role are options
+
+/* ### App Role
 resource "vault_auth_backend" "approle" {
   type = "approle"
 }
@@ -139,6 +142,6 @@ resource "vault_approle_auth_backend_role" "cert" {
   role_name      = "f5-device-role"
   token_policies = ["cert-policy"]
 }
-
+ */
 
 

@@ -102,13 +102,13 @@ module "bigip" {
 }
 
 
-// hcp vault configuration - due to dependency needs to be run separately
-// cd modules/vault_config/
+#hcp vault configuraiton - pki and kv and aws auth
 module "hcp-vault-config" {
   source = "./modules/vault_config/"
 
-  vault_fqdn  = local.vault_fqdn
-  vault_token = local.vault_token
-  f5admin     = module.bigip.f5_username
-  f5password  = module.bigip.bigip_password
+  vault_fqdn          = local.vault_fqdn
+  vault_token         = local.vault_token
+  f5admin             = module.bigip.f5_username
+  f5password          = module.bigip.bigip_password
+  vault_bound_ami_ids = [module.infra-aws.bastion_ec2_instance_id]
 }
