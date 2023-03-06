@@ -1,7 +1,7 @@
 pid_file = "./pidfile"
 
 vault {
-   address = "https://hcp-vault-demo-public-vault-457f3ef0.5ef008f8.z1.hashicorp.cloud:8200"
+   address = "https://hcp-vault-demo-public-vault-7a4fb99b.6adbf943.z1.hashicorp.cloud:8200"
 }
 
 auto_auth {
