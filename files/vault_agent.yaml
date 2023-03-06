@@ -28,3 +28,4 @@ mainSteps:
       - sudo echo "# DO NOT DO THIS - DEMO ONLY" >> /tmp/startVaultAgent.sh
       - sudo echo "vault agent -config=/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/" >> /tmp/startVaultAgent.sh
       - sudo chmod u+x /tmp/startVaultAgent.sh
+      - echo "done" >> /tmp/vault_config_log.txt
