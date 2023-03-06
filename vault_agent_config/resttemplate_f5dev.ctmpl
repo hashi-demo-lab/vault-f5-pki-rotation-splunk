@@ -1,4 +1,4 @@
-{{ with pkiCert "pki_intermediate/issue/f5demo" "common_name=prod.f5demo.com" -ttl}}
+{{ with pkiCert "pki_intermediate/issue/f5demo" "common_name=dev.f5demo.com"}}
 
 {
     "class": "AS3",
