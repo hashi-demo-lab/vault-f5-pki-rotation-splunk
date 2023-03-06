@@ -21,7 +21,7 @@ auto_auth {
 }
 
 template {
-  source      = "/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/resttemplate.ctmpl"
+  source      = "/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/resttemplate_f5prod.ctmpl"
   destination = "./prod_f5_prod_payload.json"
   error_on_missing_key=true
   wait = "10s"
