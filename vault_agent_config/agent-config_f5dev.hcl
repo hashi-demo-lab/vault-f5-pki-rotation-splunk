@@ -9,7 +9,7 @@ auto_auth {
       namespace = "admin"
       mount_path = "auth/aws"
       config = {
-          type = "iam"
+          type = "ec2"
           role = "f5-device-role"
       }
   }
