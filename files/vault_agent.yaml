@@ -20,6 +20,7 @@ mainSteps:
       - cd /tmp
       - sudo rm -rf /home/ubuntu/vault-f5-pki-rotation-splunk
       - sudo rm -rf usr/local/bin/vault
+      - sudo rm -rf vault_1.13.0_linux_amd64.zip
       - sudo git clone https://github.com/hashicorp-demo-lab/vault-f5-pki-rotation-splunk 2>/dev/null
       - sudo unzip vault_1.13.0_linux_amd64.zip
       - sudo mv vault /usr/local/bin/
