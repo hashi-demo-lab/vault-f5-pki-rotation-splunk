@@ -11,15 +11,17 @@ mainSteps:
       - sudo DEBIAN_FRONTEND=noninteractive apt install unzip
       - sudo DEBIAN_FRONTEND=noninteractive apt install git
       - cd /tmp
-      - sudo wget https://releases.hashicorp.com/vault/1.13.0/#:~:text=vault_1.13.0_linux_amd64.zip 2>/dev/null
+      - sudo wget https://releases.hashicorp.com/vault/1.13.0/vault_1.13.0_linux_amd64.zip 2>/dev/null
   - action: "aws:runShellScript"
     name: "configure"
     inputs:
       timeoutSeconds: '700'
       runCommand:
       - cd /tmp
+      - sudo rm -rf /home/ubuntu/vault-f5-pki-rotation-splunk
+      - sudo rm -rf usr/local/bin/vault
       - sudo git clone https://github.com/hashicorp-demo-lab/vault-f5-pki-rotation-splunk 2>/dev/null
-      - sudo unzip vault_1.13.0-rc1_linux_amd64.zip
+      - sudo unzip vault_1.13.0_linux_amd64.zip
       - sudo mv vault /usr/local/bin/
       - sudo mv /tmp/vault-f5-pki-rotation-splunk /home/ubuntu/vault-f5-pki-rotation-splunk
       - sudo echo "# DO NOT DO THIS - DEMO ONLY" >> /tmp/startVaultAgent.sh
