@@ -26,7 +26,7 @@ template {
   error_on_missing_key=true
   wait = "10s"
   exec {
-    command : ["python3", "callPipeline.py"]
-    timeout : "120s"
+    "command" : ["python3", "callPipeline.py"]
+    "timeout" : "120s"
   } 
 }
