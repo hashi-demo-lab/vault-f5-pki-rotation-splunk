@@ -16,23 +16,18 @@ export HCP_CLIENT_SECRET=""
 terraform apply --auto-approve -target module.hcp-vault; terraform apply --auto-approve
 ```
 
-```sh
-# export environment variables, namespace is required for HCP
+set environment variables
 
+```sh
 export VAULT_NAMESPACE=admin
 export VAULT_ADDR='https://hcp-vault-demo-public-vault-7a4fb99b.6adbf943.z1.hashicorp.cloud:8200'
 export VAULT_TOKEN=''
 ```
 
-```sh
-#AppRole - Get roleid and secret-id
-
-vault read -format=json auth/approle/role/f5-device-role/role-id | jq -r '.data.role_id' > ../roleID
-vault write -f -format=json auth/approle/role/f5-device-role/secret-id | jq -r '.data.secret_id' > ../secretID
-```
+From Bastion host
+SSH to Bastion and start Vault Agent
 
 ```sh
-#start Vault Agent with directory config using multiple agent templates
-
-vault agent -config=/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/
+cd /tmp
+sh startVaultAgent.sh
 ```
