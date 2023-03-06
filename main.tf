@@ -110,5 +110,5 @@ module "hcp-vault-config" {
   vault_token         = local.vault_token
   f5admin             = module.bigip.f5_username
   f5password          = module.bigip.bigip_password
-  vault_bound_ami_ids = [module.infra-aws.bastion_ec2_instance_id]
+  vault_bound_ami_ids = [module.infra-aws.bastion_ec2_ami_id]
 }

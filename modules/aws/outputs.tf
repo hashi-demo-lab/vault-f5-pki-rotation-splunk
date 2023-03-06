@@ -35,3 +35,8 @@ output "bastion_ec2_instance_id" {
   description = "ec2 instance id"
   value = aws_instance.bastion.id
 }
+
+output "bastion_ec2_ami_id" {
+  description = "ec2 instance id"
+  value = aws_instance.bastion.ami
+}
