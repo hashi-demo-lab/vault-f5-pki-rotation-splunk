@@ -73,3 +73,20 @@ resource "bigip_ltm_virtual_server" "https" {
   client_profiles            = [bigip_ltm_profile_client_ssl.profile.name]
   source_address_translation = "automap"
 } 
+
+
+### Validation Example
+/* 
+data "tls_certificate" "this" {
+    url = var.virtualserver_url
+    depends_on = [
+      resource.bigip_ltm_profile_client_ssl.profile
+    ]
+
+     lifecycle {
+        postcondition {
+            condition     =  self.certificates[0].serial_number == replace(vault_generic_endpoint.pki.serial_number, ":", "")
+            error_message = "Certificate serial numbers do not match"
+       }
+    }  
+} */

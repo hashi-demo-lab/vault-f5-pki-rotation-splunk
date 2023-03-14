@@ -30,9 +30,7 @@ data "tls_certificate" "this" {
 
      lifecycle {
         postcondition {
-            condition     =  anytrue([
-              for item in self.certificates : contains([local.vault_cert], item.serial_number)
-            ])
+            condition     =  tls_certificate.self.certificates[0].serial_number == replace(vault_pki_secret_backend_cert.this.serial_number, ":", "")
             error_message = "Certificate serial numbers do not match"
        }
     }  
