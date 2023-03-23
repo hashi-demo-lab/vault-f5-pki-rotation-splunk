@@ -6,7 +6,7 @@ terraform {
     }
     azurerm = {
         source = "hashicorp/azurerm"
-        version = "~> 2.20.0"
+        version = "3.48.0"
     }
     acme = {
         source = "vancluever/acme"

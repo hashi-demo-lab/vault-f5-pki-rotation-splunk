@@ -1,5 +1,5 @@
 locals {
-  deployment_id = lower("${var.deployment_name}-${random_string.suffix.result}")
+ 
 }
 
 resource "random_string" "suffix" {
@@ -112,3 +112,38 @@ module "hcp-vault-config" {
   f5password          = module.bigip.bigip_password
   vault_bound_ami_ids = [module.infra-aws.bastion_ec2_ami_id]
 }
+
+
+
+resource "aws_route53_zone" "private_zone" {
+  name = "${var.customer_domain}.com"
+  vpc {
+    vpc_id = module.infra-aws.vpc_id
+  }
+}
+
+resource "aws_route53_record" "private_record_prod" {
+  zone_id = aws_route53_zone.private_zone.zone_id
+  name    = "prod.${var.customer_domain}.com"
+  type    = "A"
+  ttl     = "300"
+  records = [
+    "10.200.10.10"
+  ]
+}
+
+
+resource "aws_route53_record" "private_record_dev" {
+  zone_id = aws_route53_zone.private_zone.zone_id
+  name    = "dev.${var.customer_domain}.com"
+  type    = "A"
+  ttl     = "300"
+  records = [
+    "10.200.10.11"
+  ]
+}
+
+
+
+
+
