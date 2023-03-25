@@ -6,6 +6,11 @@ variable "deployment_name" {
   default     = ""
 }
 
+variable "customer_domain" {
+  description = "This is the url that will be created customer_domain.com"
+  default = "f5demo.com"
+}
+
 // hashicorp identification variables
 
 variable "owner" {
@@ -50,18 +55,6 @@ variable "hcp_vault_tier" {
   description = "HCP Vault cluster tier"
   type        = string
   default     = "dev"
-}
-
-variable "hcp_boundary_init_user" {
-  description = "Initial admin user"
-  type        = string
-  default     = "admin"
-}
-
-variable "hcp_boundary_init_pass" {
-  description = "Initial admin user password"
-  type        = string
-  default     = "HashiCorp1!"
 }
 
 // amazon web services (aws) variables

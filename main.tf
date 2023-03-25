@@ -116,7 +116,7 @@ module "hcp-vault-config" {
 
 
 resource "aws_route53_zone" "private_zone" {
-  name = "${var.customer_domain}.com"
+  name = "${var.customer_domain}"
   vpc {
     vpc_id = module.infra-aws.vpc_id
   }
@@ -124,7 +124,7 @@ resource "aws_route53_zone" "private_zone" {
 
 resource "aws_route53_record" "private_record_prod" {
   zone_id = aws_route53_zone.private_zone.zone_id
-  name    = "prod.${var.customer_domain}.com"
+  name    = "prod.${var.customer_domain}"
   type    = "A"
   ttl     = "300"
   records = [
@@ -135,7 +135,7 @@ resource "aws_route53_record" "private_record_prod" {
 
 resource "aws_route53_record" "private_record_dev" {
   zone_id = aws_route53_zone.private_zone.zone_id
-  name    = "dev.${var.customer_domain}.com"
+  name    = "dev.${var.customer_domain}"
   type    = "A"
   ttl     = "300"
   records = [

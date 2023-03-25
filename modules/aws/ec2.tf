@@ -3,7 +3,7 @@ data "aws_ami" "ubuntu20" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04*"]
   }
 
   filter {
@@ -65,7 +65,7 @@ resource "aws_iam_role_policy_attachment" "ssm_policy_attachment" {
 
 resource "aws_instance" "bastion" {
   ami             = data.aws_ami.ubuntu20.id
-  instance_type   = "t2.micro"
+  instance_type   = "t3.small"
   key_name        = aws_key_pair.main.key_name
   associate_public_ip_address = true
   subnet_id       = element(module.vpc.public_subnets, 1)
@@ -81,7 +81,7 @@ resource "aws_instance" "bastion" {
   tags = {
     owner = var.owner
     TTL   = var.ttl
-    Name  = "VaultAgent"
+    Name  = "VaultAgent1"
   }
 }
 
