@@ -114,7 +114,7 @@ module "hcp-vault-config" {
   vault_bound_ami_ids = [module.infra-aws.bastion_ec2_ami_id]
 }
 
-
+# tfc agent for local dns resolution
 module "tfc-agent" {
   source = "github.com/hashicorp-demo-lab/terraform-aws-tfc-agents-ecs"
 

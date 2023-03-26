@@ -7,7 +7,7 @@ variable "app_prefix" {
 variable "vip_ip" {
   type        = string
   description = "Virtual Server IP"
-  default     = "10.200.10.50"
+  default     = "10.200.10.11"
 }
 
 
@@ -20,7 +20,7 @@ variable "node_list" {
 variable "f5_mgmtPublicDNS" {
   type        = string
   description = "F5 management address"
-  default     = "ec2-13-54-152-67.ap-southeast-2.compute.amazonaws.com:8443"
+  default     = "ec2-54-66-229-110.ap-southeast-2.compute.amazonaws.com:8443"
   sensitive   = true
 }
 
@@ -58,5 +58,5 @@ variable "pki_role" {
 variable "common_name" {
   type        = string
   description = "certificate common name"
-  default     = "prod.f5demo.com"
+  default     = "dev.f5demo.com"
 }

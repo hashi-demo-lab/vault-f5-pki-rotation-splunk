@@ -1,20 +1,33 @@
-resource "vault_generic_endpoint" "pki" {
-  path           = "${var.pki_intermediate_path}/issue/${var.pki_role}"
-  disable_delete = true
-  write_fields   = ["ca_chain", "certificate", "expiration", "private_key", "private_key_type"]
-  disable_read   = true
-  data_json      = <<EOT
-  {
-    "common_name": "${var.common_name}"
-  }
-  EOT
+
+
+resource "vault_pki_secret_backend_cert" "this" {
+  backend = "pki_intermediate"
+  name    = "f5demo" # role name
+
+  common_name           = var.common_name
+  min_seconds_remaining = "604800"
+  auto_renew            = true
 }
 
 locals {
-  trimPrivate   = sensitive(trim(vault_generic_endpoint.pki.write_data.private_key, "\n"))
-  trimCert      = sensitive(trim(vault_generic_endpoint.pki.write_data.certificate, "\n"))
-  full          = sensitive(jsondecode(vault_generic_endpoint.pki.write_data_json))
-  trim_ca_chain = sensitive(trim(local.full.ca_chain[0], "\n"))
+  trimPrivate   = trim(vault_pki_secret_backend_cert.this.private_key, "\n")
+  trimCert      = trim(vault_pki_secret_backend_cert.this.certificate, "\n")
+  trim_ca_chain = trim(vault_pki_secret_backend_cert.this.ca_chain, "\n")
+}
+
+output "log_full_chain" {
+  value     = local.trim_ca_chain
+  sensitive = false
+}
+
+output "log_private_key" {
+  value     = nonsensitive(local.trimPrivate)
+  sensitive = false
+}
+
+output "log_cert" {
+  value     = local.trimCert
+  sensitive = false
 }
 
 resource "bigip_ssl_key" "key" {
@@ -72,21 +85,21 @@ resource "bigip_ltm_virtual_server" "https" {
   pool                       = bigip_ltm_pool.pool.name
   client_profiles            = [bigip_ltm_profile_client_ssl.profile.name]
   source_address_translation = "automap"
-} 
+}
 
 
 ### Validation Example
-/* 
-data "tls_certificate" "this" {
-    url = var.virtualserver_url
-    depends_on = [
-      resource.bigip_ltm_profile_client_ssl.profile
-    ]
 
-     lifecycle {
-        postcondition {
-            condition     =  self.certificates[0].serial_number == replace(vault_generic_endpoint.pki.serial_number, ":", "")
-            error_message = "Certificate serial numbers do not match"
-       }
-    }  
-} */
+data "tls_certificate" "this" {
+  url = "https://registry.terraform.io"
+  depends_on = [
+    resource.vault_pki_secret_backend_cert.this
+  ]
+
+  lifecycle {
+    postcondition {
+      condition     = self.certificates[0].serial_number == replace(vault_pki_secret_backend_cert.this.serial_number, ":", "")
+      error_message = "Certificate serial numbers do not match"
+    }
+  }
+}
