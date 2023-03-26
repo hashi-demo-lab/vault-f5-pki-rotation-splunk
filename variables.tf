@@ -212,7 +212,7 @@ variable "tfc_agent_token" {
 variable "tfc_agent_prefix" {
   type        = string
   description = "Agent pool token to authenticate to TFC/TFE when cloud agents are instantiated."
-  default = "tfc_agent"
+  default     = "tfc_agent"
 }
 
 variable "tfc_agent_name" {
@@ -230,7 +230,7 @@ variable "tfc_agent_version" {
 variable "tfc_address" {
   type        = string
   description = "Hostname of self-hosted TFE instance. Leave default if TFC is in use."
-  default     = "app.terraform.io"
+  default     = "https://app.terraform.io"
 }
 
 variable "number_of_agents" {
