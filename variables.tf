@@ -224,7 +224,7 @@ variable "tfc_agent_name" {
 variable "tfc_agent_version" {
   type        = string
   description = "Version of tfc-agent to run."
-  default     = "1.7.0"
+  default     = "1.4.0"
 }
 
 variable "tfc_address" {
