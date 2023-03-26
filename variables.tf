@@ -59,6 +59,11 @@ variable "hcp_vault_tier" {
 
 // amazon web services (aws) variables
 
+variable "ingress_cidr_blocks" {
+  description = "ingress allow list"
+  type = list(string)
+}
+
 variable "aws_region" {
   description = "AWS region"
   type        = string

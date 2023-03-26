@@ -81,7 +81,7 @@ resource "aws_instance" "bastion" {
   tags = {
     owner = var.owner
     TTL   = var.ttl
-    Name  = "VaultAgent1"
+    Name  = "VaultAgent"
   }
 }
 

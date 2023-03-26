@@ -3,6 +3,11 @@ variable "region" {
   type        = string
 }
 
+variable "ingress_cidr_blocks" {
+  description = "ingress allow list"
+  type = list(string)
+}
+
 variable "owner" {
   description = "Resource owner identified using an email address"
   type        = string
@@ -89,11 +94,11 @@ variable "hcp_hvn_cidr" {
 variable "mgmt_ingress_rules" {
   description = "Management security group ingress rules"
   type = list(any)
-  default = ["http-80-tcp","https-443-tcp","ssh-tcp","https-8443-tcp"]
+  default = ["rdp-tcp","http-80-tcp","https-443-tcp","ssh-tcp","https-8443-tcp"]
 }
 
 variable "mgmt_egress_rules" {
   description = "Management security group egress rules"
   type = list(any)
-  default = ["vault-tcp","http-80-tcp","https-443-tcp","ssh-tcp","https-8443-tcp"]
+  default = ["rdp-tcp","vault-tcp","http-80-tcp","https-443-tcp","ssh-tcp","https-8443-tcp"]
 }

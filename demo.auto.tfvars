@@ -12,4 +12,7 @@ organization = "hashi-demos-apj"
 customername = "acme"
 
 
+#your public IP address range to allow inbound
+ingress_cidr_blocks = ["124.169.52.211/32", "202.137.173.136/32"]
+
 

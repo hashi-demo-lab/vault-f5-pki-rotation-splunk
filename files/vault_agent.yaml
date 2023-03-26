@@ -35,5 +35,7 @@ mainSteps:
     inputs:
       timeoutSeconds: '900'
       runCommand:
-      - echo "done"
+      - echo "starting desktop install"
+      - sudo apt install ubuntu-gnome-desktop -y 2>/dev/null
+
 

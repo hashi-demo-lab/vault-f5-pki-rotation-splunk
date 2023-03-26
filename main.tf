@@ -39,6 +39,7 @@ module "infra-aws" {
   hcp_hvn_cidr                = var.hcp_hvn_cidr
   ssh_pubkey                  = var.ssh_pubkey
   aws_key_pair_key_name       = var.aws_key_pair_key_name
+  ingress_cidr_blocks = var.ingress_cidr_blocks
 }
 
 //SSM Doc for Vault agent pre-reqs
