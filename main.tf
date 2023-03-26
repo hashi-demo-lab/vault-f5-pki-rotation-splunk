@@ -1,5 +1,5 @@
 locals {
- 
+
 }
 
 resource "random_string" "suffix" {
@@ -39,7 +39,7 @@ module "infra-aws" {
   hcp_hvn_cidr                = var.hcp_hvn_cidr
   ssh_pubkey                  = var.ssh_pubkey
   aws_key_pair_key_name       = var.aws_key_pair_key_name
-  ingress_cidr_blocks = var.ingress_cidr_blocks
+  ingress_cidr_blocks         = var.ingress_cidr_blocks
 }
 
 //SSM Doc for Vault agent pre-reqs
@@ -115,9 +115,23 @@ module "hcp-vault-config" {
 }
 
 
+module "tfc-agent" {
+  source = "github.com/hashicorp-demo-lab/terraform-aws-tfc-agents-ecs"
+
+  friendly_name_prefix = var.tfc_agent_prefix
+  region               = var.aws_region
+  vpc_id               = module.infra-aws.vpc_id
+  subnet_ids           = module.infra-aws.private_subnet_ids
+  tfc_agent_token      = var.tfc_agent_token
+  tfc_agent_name       = var.tfc_agent_name
+  tfc_agent_version    = var.tfc_agent_version
+  agent_image          = "hashicorp/tfc-agent:latest"
+  enable_logs          = false
+}
+
 
 resource "aws_route53_zone" "private_zone" {
-  name = "${var.customer_domain}"
+  name = var.customer_domain
   vpc {
     vpc_id = module.infra-aws.vpc_id
   }

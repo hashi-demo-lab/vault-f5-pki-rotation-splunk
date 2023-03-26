@@ -3,5 +3,5 @@ locals {
   vault_fqdn   = module.hcp-vault.public_endpoint_url
   vault_token  = module.hcp-vault.admin_token
 
-   deployment_id = lower("${var.deployment_name}-${random_string.suffix.result}")
+  deployment_id = lower("${var.deployment_name}-${random_string.suffix.result}")
 }
