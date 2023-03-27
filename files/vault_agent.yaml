@@ -30,12 +30,5 @@ mainSteps:
       - sudo echo "vault agent -config=/home/ubuntu/vault-f5-pki-rotation-splunk/vault_agent_config/" >> /tmp/startVaultAgent.sh
       - sudo chmod u+x /tmp/startVaultAgent.sh
       - echo "done vault config update ec2" >> /tmp/vault_config_log.txt
-  - action: "aws:runShellScript"
-    name: "add_desktop"
-    inputs:
-      timeoutSeconds: '900'
-      runCommand:
-      - echo "starting desktop install"
-      - sudo apt install ubuntu-gnome-desktop -y 2>/dev/null
-
+      - sudo apt install nginx -y
 

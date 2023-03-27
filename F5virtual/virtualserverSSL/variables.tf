@@ -14,7 +14,7 @@ variable "vip_ip" {
 variable "node_list" {
   type        = list(string)
   description = "list of node IP addresses"
-  default     = ["10.200.11.67"]
+  default     = ["10.200.11.187"]
 }
 
 variable "f5_mgmtPublicDNS" {

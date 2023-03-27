@@ -69,12 +69,12 @@ resource "aws_instance" "bastion" {
   key_name        = aws_key_pair.main.key_name
   associate_public_ip_address = true
   subnet_id       = element(module.vpc.public_subnets, 1)
-  security_groups = [module.sg-mgmt.security_group_id]
+  security_groups = [module.sg-mgmt.security_group_id, module.sg-private.security_group_id]
   iam_instance_profile = aws_iam_instance_profile.ssm_instance_profile.name
 
   lifecycle {
       ignore_changes = [
-        security_groups
+          security_groups
       ]
   }
 
