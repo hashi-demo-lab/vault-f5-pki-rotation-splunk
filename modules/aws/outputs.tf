@@ -13,10 +13,16 @@ output "private_subnet_ids" {
   value       = module.vpc.private_subnets
 }
 
-output "security_group_ssh_id" {
-  description = "Security group ssh id"
+output "security_group_public_id" {
+  description = "Security group public id"
   value       = module.sg-mgmt.security_group_id
 }
+
+output "security_group_private_id" {
+  description = "Security group private id"
+  value       = module.sg-private.security_group_id
+}
+
 
 output "tgw_id" {
   value = module.tgw.ec2_transit_gateway_id

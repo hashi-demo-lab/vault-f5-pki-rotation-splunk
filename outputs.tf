@@ -34,7 +34,7 @@ output "f5_mgmtPublicIP" {
 
 output "f5_mgmtPublicDNS" {
   description = "F5 management IP"
-  value       = module.bigip.mgmtPublicDNS
+  value       = "${module.bigip.mgmtPublicDNS}:8443"
 }
 
 output "f5_username" {

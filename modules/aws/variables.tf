@@ -102,3 +102,10 @@ variable "mgmt_egress_rules" {
   type = list(any)
   default = ["vault-tcp","http-80-tcp","https-443-tcp","ssh-tcp","https-8443-tcp"]
 }
+
+
+variable "internal_ingress_rules" {
+  description = "internal security group ingress rules"
+  type = list(any)
+  default = ["http-80-tcp","https-443-tcp","ssh-tcp","https-8443-tcp"]
+}

@@ -90,7 +90,7 @@ module "bigip" {
     "public_ip"          = true,
     "private_ip_primary" = ""
   }]
-  mgmt_securitygroup_ids = [module.infra-aws.security_group_ssh_id]
+  mgmt_securitygroup_ids = [module.infra-aws.security_group_public_id, module.infra-aws.security_group_private_id]
 
   #updating to latest
   DO_URL   = "https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v1.36.0/f5-declarative-onboarding-1.36.0-4.noarch.rpm"
