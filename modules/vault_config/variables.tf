@@ -42,7 +42,7 @@ variable "f5password" {
 variable "cert_ttl_seconds" {
   description = "value"
   type        = number
-  default     = 600 #10 minutes
+  default     = 1728000 #20 days
 }
 
 

@@ -121,7 +121,7 @@ module "tfc-agent" {
   friendly_name_prefix = var.tfc_agent_prefix
   region               = var.aws_region
   vpc_id               = module.infra-aws.vpc_id
-  subnet_ids           = module.infra-aws.private_subnet_ids
+  subnet_ids           = module.infra-aws.public_subnet_ids
   tfc_agent_token      = var.tfc_agent_token
   tfc_agent_name       = var.tfc_agent_name
   tfc_agent_version    = var.tfc_agent_version

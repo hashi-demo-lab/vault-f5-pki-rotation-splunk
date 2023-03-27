@@ -1,5 +1,3 @@
-
-
 resource "vault_pki_secret_backend_cert" "this" {
   backend = "pki_intermediate"
   name    = "f5demo" # role name
@@ -15,38 +13,43 @@ locals {
   trim_ca_chain = trim(vault_pki_secret_backend_cert.this.ca_chain, "\n")
 }
 
-output "log_full_chain" {
-  value     = local.trim_ca_chain
-  sensitive = false
-}
-
-output "log_private_key" {
-  value     = nonsensitive(local.trimPrivate)
-  sensitive = false
-}
-
-output "log_cert" {
-  value     = local.trimCert
-  sensitive = false
-}
-
 resource "bigip_ssl_key" "key" {
-  name      = "${var.app_prefix}.key"
+  name      = "${var.app_prefix}${vault_pki_secret_backend_cert.this.expiration}.key"
   content   = local.trimPrivate
   partition = var.f5_partition
+  depends_on = [
+    vault_pki_secret_backend_cert.this
+  ]
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "bigip_ssl_certificate" "cert" {
-  name      = "${var.app_prefix}.crt"
+  name      = "${var.app_prefix}${vault_pki_secret_backend_cert.this.expiration}.crt"
   content   = local.trimCert
   partition = var.f5_partition
+  depends_on = [
+    vault_pki_secret_backend_cert.this
+  ]
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "bigip_ssl_certificate" "chain" {
-  name      = "${var.app_prefix}cabundle.crt"
+  name      = "${var.app_prefix}${vault_pki_secret_backend_cert.this.expiration}cabundle.crt"
   content   = local.trim_ca_chain
   partition = var.f5_partition
+  depends_on = [
+    vault_pki_secret_backend_cert.this
+  ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
+
 
 resource "bigip_ltm_profile_client_ssl" "profile" {
   name          = "/${var.f5_partition}/clientssl_${var.app_prefix}"
@@ -77,6 +80,7 @@ resource "bigip_ltm_pool_attachment" "attach_node" {
   node     = "${bigip_ltm_node.node[each.key].name}:80"
 }
 
+
 # Create F5 virtual server
 resource "bigip_ltm_virtual_server" "https" {
   name                       = "/Common/${var.app_prefix}_vs_https"
@@ -88,13 +92,26 @@ resource "bigip_ltm_virtual_server" "https" {
 }
 
 
-### Validation Example
+output "log_full_chain" {
+  value     = local.trim_ca_chain
+  sensitive = false
+}
 
+output "log_private_key" {
+  value     = nonsensitive(local.trimPrivate)
+  sensitive = false
+}
+
+output "log_cert" {
+  value     = local.trimCert
+  sensitive = false
+}
+
+### Validation Example
+/* 
 data "tls_certificate" "this" {
   url = "https://registry.terraform.io"
-  depends_on = [
-    resource.vault_pki_secret_backend_cert.this
-  ]
+
 
   lifecycle {
     postcondition {
@@ -102,4 +119,4 @@ data "tls_certificate" "this" {
       error_message = "Certificate serial numbers do not match"
     }
   }
-}
+} */
