@@ -83,7 +83,7 @@ module "bigip" {
   version = "1.1.10"
 
   f5_ami_search_name = "F5 BIGIP-16.1.3.3* PAYG-Good 25Mbps*"
-  ec2_instance_type  = "t3.medium"
+  ec2_instance_type  = "t3.large"
   prefix             = "${var.prefix}new"
   ec2_key_name       = var.aws_key_pair_key_name
   mgmt_subnet_ids = [{ "subnet_id" = local.publicSubnet,
