@@ -68,7 +68,7 @@ resource "bigip_ltm_profile_client_ssl" "profile" {
 resource "bigip_ltm_pool" "pool" {
   name                = "/Common/${var.app_prefix}_pool"
   load_balancing_mode = "round-robin"
-  monitors            = ["http"]
+  monitors            = ["/Common/http"]
   allow_snat          = "yes"
   allow_nat           = "yes"
 }
