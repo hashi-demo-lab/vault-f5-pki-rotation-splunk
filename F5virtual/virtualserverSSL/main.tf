@@ -113,10 +113,9 @@ output "log_cert" {
 }
 
 ### Validation Example
-/* 
-data "tls_certificate" "this" {
-  url = "https://registry.terraform.io"
 
+data "tls_certificate" "this" {
+  url = "https://${var.common_name}"
 
   lifecycle {
     postcondition {
@@ -124,4 +123,4 @@ data "tls_certificate" "this" {
       error_message = "Certificate serial numbers do not match"
     }
   }
-} */
+} 
