@@ -109,7 +109,7 @@ data "tls_certificate" "this" {
   lifecycle {
     postcondition {
       condition     = self.certificates[0].serial_number == replace(vault_pki_secret_backend_cert.this.serial_number, ":", "")
-      error_message = "Certificate serial numbers do not match for ${bigip_ltm_virtual_server.https.name}:${bigip_ltm_virtual_server.https.destination}"
+      error_message = "Certificate serial numbers do not match for ${var.f5_partition}/${bigip_ssl_certificate.cert.name}"
     }
   }
 } 

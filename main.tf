@@ -155,7 +155,7 @@ resource "aws_route53_record" "private_record_dev" {
   type    = "A"
   ttl     = "300"
   records = [
-    "10.200.10.11"
+    "10.200.10.36"
   ]
 }
 

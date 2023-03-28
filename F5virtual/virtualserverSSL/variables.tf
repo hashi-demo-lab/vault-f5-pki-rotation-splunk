@@ -7,7 +7,7 @@ variable "app_prefix" {
 variable "vip_ip" {
   type        = string
   description = "Virtual Server IP"
-  default     = "10.200.10.11"
+  default     = "10.200.10.36"
 }
 
 
