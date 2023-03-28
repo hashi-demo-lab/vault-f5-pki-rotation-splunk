@@ -125,7 +125,7 @@ module "tfc-agent" {
   tfc_agent_token      = var.tfc_agent_token
   tfc_agent_name       = var.tfc_agent_name
   tfc_agent_version    = var.tfc_agent_version
-  tfc_address = var.tfc_address
+  tfc_address          = var.tfc_address
   agent_image          = "hashicorp/tfc-agent:latest"
   enable_logs          = true
 }
