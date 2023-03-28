@@ -101,13 +101,19 @@ output "log_cert" {
   sensitive = true
 }
 
+
+
 ### Validation Example
 
 locals {
    vault_cert = replace(vault_pki_secret_backend_cert.this.serial_number, ":", "")
 }
 
-/* data "tls_certificate" "this" {
+data "tls_certificate" "this" {
+  depends_on = [
+    vault_pki_secret_backend_cert.this
+  ]
+  
   url = "https://${var.common_name}"
   verify_chain = false
 
@@ -117,4 +123,4 @@ locals {
       error_message = "Certificate serial numbers do not match for ${var.f5_partition}/${bigip_ssl_certificate.cert.name}"
     }
   }
-}  */
+} 
