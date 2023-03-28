@@ -126,7 +126,7 @@ locals {
   trimPrivate   = trim(vault_pki_secret_backend_cert.this.private_key, "\n")
   trimCert      = trim(vault_pki_secret_backend_cert.this.certificate, "\n")
   trim_ca_chain = trim(vault_pki_secret_backend_cert.this.ca_chain, "\n")
-  sha1_vault_cert = sha1(trimCert)
+  sha1_vault_cert = sha1(local.trimCert)
   vault_cert = replace(vault_pki_secret_backend_cert.this.serial_number, ":", "")
   lb_cert = data.tls_certificate.this.certificates
 }
