@@ -115,6 +115,7 @@ output "log_cert" {
 ### Validation Example
 
 data "tls_certificate" "this" {
+  count = vault_pki_secret_backend_cert.this.renew_pending ? 1 : 0
   url = "https://${var.common_name}"
 
   lifecycle {
