@@ -77,7 +77,7 @@ resource "bigip_ltm_node" "node" {
   for_each = toset(var.node_list)
   name     = "/Common/${each.value}"
   address  = each.value
-  monitor = "none"
+  monitor = "/Common/none"
 }
 
 resource "bigip_ltm_pool_attachment" "attach_node" {
