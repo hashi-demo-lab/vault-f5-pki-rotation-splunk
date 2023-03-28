@@ -3,7 +3,7 @@ resource "vault_pki_secret_backend_cert" "this" {
   name    = "f5demo" # role name
 
   common_name           = var.common_name
-  min_seconds_remaining = "1720000"
+  min_seconds_remaining = "604800"
   auto_renew            = true
 }
 
