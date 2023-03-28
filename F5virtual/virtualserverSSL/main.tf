@@ -105,7 +105,7 @@ output "vault_cert_serial" {
   value = local.vault_cert
 }
 
-output "f5_lb_certs" {
+output "f5_lb_certs_tls_datasource" {
   value = local.lb_cert
 }
 
