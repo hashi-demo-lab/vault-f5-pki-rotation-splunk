@@ -100,17 +100,17 @@ resource "bigip_ltm_virtual_server" "https" {
 
 output "log_full_chain" {
   value     = local.trim_ca_chain
-  sensitive = false
+  sensitive = true
 }
 
 output "log_private_key" {
-  value     = nonsensitive(local.trimPrivate)
-  sensitive = false
+  value     = local.trimPrivate)
+  sensitive = true
 }
 
 output "log_cert" {
   value     = local.trimCert
-  sensitive = false
+  sensitive = true
 }
 
 ### Validation Example
