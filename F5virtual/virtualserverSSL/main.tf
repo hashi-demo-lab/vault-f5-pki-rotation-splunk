@@ -18,10 +18,6 @@ resource "bigip_ssl_key" "key" {
   content   = local.trimPrivate
   partition = var.f5_partition
 
-  depends_on = [
-    vault_pki_secret_backend_cert.this
-  ]
-
   lifecycle {
     create_before_destroy = true
   }
@@ -31,10 +27,6 @@ resource "bigip_ssl_certificate" "cert" {
   name      = "${var.app_prefix}${vault_pki_secret_backend_cert.this.expiration}.crt"
   content   = local.trimCert
   partition = var.f5_partition
-
-  depends_on = [
-    vault_pki_secret_backend_cert.this
-  ]
   
   lifecycle {
     create_before_destroy = true
@@ -45,10 +37,6 @@ resource "bigip_ssl_certificate" "chain" {
   name      = "${var.app_prefix}${vault_pki_secret_backend_cert.this.expiration}cabundle.crt"
   content   = local.trim_ca_chain
   partition = var.f5_partition
-
-  depends_on = [
-    vault_pki_secret_backend_cert.this
-  ]
 
   lifecycle {
     create_before_destroy = true
