@@ -103,13 +103,17 @@ output "log_cert" {
 
 ### Validation Example
 
+locals {
+   vault_cert = replace(vault_pki_secret_backend_cert.this.serial_number, ":", "")
+}
+
 data "tls_certificate" "this" {
   url = "https://${var.common_name}"
   verify_chain = false
 
   lifecycle {
     postcondition {
-      condition     = self.certificates[0].serial_number == replace(vault_pki_secret_backend_cert.this.serial_number, ":", "")
+      condition     = self.certificates[0].serial_number == local.vault_cert
       error_message = "Certificate serial numbers do not match for ${var.f5_partition}/${bigip_ssl_certificate.cert.name}"
     }
   }
