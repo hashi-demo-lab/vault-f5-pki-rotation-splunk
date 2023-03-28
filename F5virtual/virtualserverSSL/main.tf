@@ -96,16 +96,16 @@ output "log_private_key" {
   sensitive = true
 }
 
-output "log_cert" {
-  value     = local.trimCert
-  sensitive = true
+output "vault_cert" {
+  value     = nonsensitive(local.trimCert)
+  sensitive = false
 }
 
 output "vault_cert_serial" {
   value = local.vault_cert
 }
 
-output "vault_lb_certs" {
+output "f5_lb_certs" {
   value = local.lb_cert
 }
 
