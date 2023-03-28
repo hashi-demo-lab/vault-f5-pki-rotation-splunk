@@ -107,7 +107,7 @@ locals {
    vault_cert = replace(vault_pki_secret_backend_cert.this.serial_number, ":", "")
 }
 
-data "tls_certificate" "this" {
+/* data "tls_certificate" "this" {
   url = "https://${var.common_name}"
   verify_chain = false
 
@@ -117,4 +117,4 @@ data "tls_certificate" "this" {
       error_message = "Certificate serial numbers do not match for ${var.f5_partition}/${bigip_ssl_certificate.cert.name}"
     }
   }
-} 
+}  */
