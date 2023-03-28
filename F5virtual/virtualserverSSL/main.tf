@@ -98,7 +98,6 @@ output "log_private_key" {
 
 output "vault_cert" {
   value     = nonsensitive(local.trimCert)
-  sensitive = false
 }
 
 output "vault_cert_serial" {
