@@ -104,7 +104,7 @@ output "log_full_chain" {
 }
 
 output "log_private_key" {
-  value     = local.trimPrivate)
+  value     = local.trimPrivate
   sensitive = true
 }
 
