@@ -105,6 +105,7 @@ output "log_cert" {
 
 data "tls_certificate" "this" {
   url = "https://${var.common_name}"
+  verify_chain = false
 
   lifecycle {
     postcondition {
