@@ -27,7 +27,7 @@ resource "bigip_ssl_certificate" "cert" {
   name      = "${var.app_prefix}${vault_pki_secret_backend_cert.this.expiration}.crt"
   content   = local.trimCert
   partition = var.f5_partition
-  
+
   lifecycle {
     create_before_destroy = true
   }
@@ -65,7 +65,7 @@ resource "bigip_ltm_node" "node" {
   for_each = toset(var.node_list)
   name     = "/Common/${each.value}"
   address  = each.value
-  monitor = "/Common/none"
+  monitor  = "/Common/none"
 }
 
 resource "bigip_ltm_pool_attachment" "attach_node" {
@@ -97,7 +97,7 @@ output "log_private_key" {
 }
 
 output "vault_cert" {
-  value     = nonsensitive(local.trimCert)
+  value = local.trimCert
 }
 
 output "vault_cert_serial" {
@@ -111,8 +111,8 @@ output "f5_lb_certs_tls_datasource" {
 ### Validation Example
 
 locals {
-   vault_cert = replace(vault_pki_secret_backend_cert.this.serial_number, ":", "")
-   lb_cert = data.tls_certificate.this.certificates
+  vault_cert = replace(vault_pki_secret_backend_cert.this.serial_number, ":", "")
+  lb_cert    = data.tls_certificate.this.certificates
 }
 
 data "tls_certificate" "this" {
@@ -120,10 +120,10 @@ data "tls_certificate" "this" {
     vault_pki_secret_backend_cert.this
   ]
 
-  url = "https://${var.common_name}"
+  url          = "https://${var.common_name}"
   verify_chain = false
 
- /*  lifecycle {
+  /*  lifecycle {
     postcondition {
       condition     = self.certificates[0].serial_number == local.vault_cert
       error_message = "Certificate serial numbers do not match for ${var.f5_partition}/${bigip_ssl_certificate.cert.name}"
