@@ -116,7 +116,7 @@ module "hcp-vault-config" {
 
 # tfc agent for local dns resolution
 module "tfc-agent" {
-  source = "github.com/hashicorp-demo-lab/terraform-aws-tfc-agents-ecs"
+  source = "github.com/hashi-demo-lab/terraform-aws-tfc-agents-ecs"
 
   friendly_name_prefix = var.tfc_agent_prefix
   region               = var.aws_region
