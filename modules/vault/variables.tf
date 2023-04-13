@@ -22,3 +22,8 @@ variable "hcp-vault-events" {
   description = "Vault events token"
   type        = string
 }
+
+variable "splunk_fqdn" {
+  description = "fqdn to send vault metrics to"
+  
+}

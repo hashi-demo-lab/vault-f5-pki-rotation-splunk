@@ -80,6 +80,7 @@ module "hcp-vault" {
 
   hcp-vault-audit = random_uuid.hcp-vault-audit.result
   hcp-vault-events = random_uuid.hcp-vault-events.result
+  splunk_fqdn = module.splunk.splunk_fqdn1
 }
 
 

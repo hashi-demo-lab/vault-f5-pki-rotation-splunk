@@ -3,5 +3,6 @@ provider "vault" {
   token              = var.vault_token
   add_address_to_env = true
   #skip_child_token = true
+  skip_tls_verify = true
 }
 
