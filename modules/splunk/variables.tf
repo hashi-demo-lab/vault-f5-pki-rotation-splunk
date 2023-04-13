@@ -7,7 +7,7 @@
 
 variable "prefix" {
   description = "This prefix will be included in the name of most resources."
-  default = "user"
+  #default = "user"
 }
 
 variable "email" {
@@ -17,7 +17,7 @@ variable "email" {
 
 variable "splunk_domain" {
   description = "This is the url that will be created <value>.aws.hashidemos.io"
-  default = "splunk.user"
+  default = "splunk"
 }
 
 variable "region" {
@@ -37,16 +37,38 @@ variable "subnet_prefix" {
 
 variable "instance_type" {
   description = "Specifies the AWS instance type."
-  default     = "t2.micro"
+  default     = "t2.medium"
 }
 
-variable "ttl" {
-  description = "Specifies the AWS Time To Live before reaping."
-  default     = "8"
+variable "aws_key_name" {
+  default     = "user-key"
+  description = "stored aws ssh key"
 }
 
-variable "name" {
-  description = "Specifies the internal HashiCorp owner."
-  default     = "Armon Hashimoto"
+variable "ssh_key" {
+  default = "/Users/ssh/private_key"
+  description = "location of ssh private key file"
+  
+}
+
+variable "HCP_CLIENT_ID" {
+  description = "hcp service principal for vault config"
+}
+
+variable "HCP_CLIENT_SECRET" {
+  description = "hcp service principal secret"
+}
+
+variable "hcp_vault_cluster_id" {
+  description = "hcp vault cluster id"
+}
+
+variable "hcp_vault_hvn" {
+  description = "hcp vault hvn id"
+}
+
+variable "username" {
+  description = "hashicorp username"
+  default = "user"
 }
 

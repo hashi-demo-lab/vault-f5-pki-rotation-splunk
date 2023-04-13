@@ -1,11 +1,11 @@
 # Filter AMI to Centos
 data "aws_ami" "centos" {
-  owners      = ["679593333241"]
+  owners      = ["125523088429"]
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["CentOS Linux 7 x86_64 HVM EBS *"]
+    values = ["CentOS Stream 9*"]
   }
 
   filter {
@@ -168,23 +168,24 @@ resource "aws_instance" "splunk" {
 
   tags = {
     Name = "${var.prefix}-splunk-instance"
-    ttl  = var.ttl
-    owner = var.name
+    ##ttl  = var.ttl
+    owner = var.prefix
   }
 
 }
+
 
 resource "null_resource" "configure-splunk-app" {
   depends_on = [aws_eip_association.splunk, local_sensitive_file.private_key_file ]
 
   provisioner "file" {
     source = "files/"
-    destination = "/home/centos"
+    destination = "/home/ec2-user"
   }
 
   connection {
     type        = "ssh"
-    user        = "centos"
+    user        = "ec2-user"
     private_key = module.key_pair.private_key_pem
     host        = aws_eip.splunk.public_ip
   }
@@ -192,28 +193,23 @@ resource "null_resource" "configure-splunk-app" {
 
   provisioner "remote-exec" {
     inline = [
-      "curl https://download.splunk.com/products/splunk/releases/8.2.5/linux/splunk-8.2.5-77015bc7a462-linux-2.6-x86_64.rpm -o /home/centos/splunk.rpm",
-      "sudo chmod 644 /home/centos/splunk.rpm",
-      "sudo rpm -i /home/centos/splunk.rpm",
-      "sudo /opt/splunk/bin/splunk start --accept-license --no-prompt --answer-yes",
+      "curl https://download.splunk.com/products/splunk/releases/8.2.5/linux/splunk-8.2.5-77015bc7a462-linux-2.6-x86_64.rpm -o /home/ec2-user/splunk.rpm",
+      "sudo chmod 644 /home/ec2-user/splunk.rpm",
+      "sudo rpm -i /home/ec2-user/splunk.rpm",
+      "sudo /opt/splunk/bin/splunk start --accept-license --no-prompt --answer-yes --seed-passwd Splunksecurepassword123",
       "sudo /opt/splunk/bin/splunk enable boot-start",
       "sudo /opt/splunk/bin/splunk stop",
-      "sudo cp /home/centos/user-seed.conf /opt/splunk/etc/system/local/user-seed.conf",
+      "sudo cp /home/ec2-user/user-seed.conf /opt/splunk/etc/system/local/user-seed.conf",
       "sudo mkdir -p /opt/splunk/etc/auth/mycerts",
-      "sudo cp /home/centos/mySplunk* /opt/splunk/etc/auth/mycerts/",
-      "sudo cp /home/centos/web.conf /opt/splunk/etc/system/local/",
-      "sudo cp -f /home/centos/server.pem /opt/splunk/etc/auth/server.pem",
+      "sudo cp /home/ec2-user/mySplunk* /opt/splunk/etc/auth/mycerts/",
+      "sudo cp /home/ec2-user/web.conf /opt/splunk/etc/system/local/",
+      "sudo cp -f /home/ec2-user/server.pem /opt/splunk/etc/auth/server.pem",
       "sudo /opt/splunk/bin/splunk start",
-      /* "sudo /opt/splunk/bin/splunk install app /home/centos/hashicorp-cloud-platform-app-for-splunk_003.tgz -auth $(awk 'NR==2 {print $3}' /home/centos/user-seed.conf):$(awk 'NR==3 {print $3}' /home/centos/user-seed.conf)",
-      "sudo /opt/splunk/bin/splunk install app /home/centos/hashicorp-vault-app-for-splunk_103.tgz -auth $(awk 'NR==2 {print $3}' /home/centos/user-seed.conf):$(awk 'NR==3 {print $3}' /home/centos/user-seed.conf)",
-      "sudo /opt/splunk/bin/splunk install app /home/centos/terraform-cloud-for-splunk_008.tgz -auth $(awk 'NR==2 {print $3}' /home/centos/user-seed.conf):$(awk 'NR==3 {print $3}' /home/centos/user-seed.conf)", */
-      "sudo sh /home/centos/hec_config.sh",
-      "sudo sh /home/centos/enable_index.sh",
     ]
 
     connection {
       type        = "ssh"
-      user        = "centos"
+      user        = "ec2-user"
       private_key = module.key_pair.private_key_pem
       host        = aws_eip.splunk.public_ip
     }

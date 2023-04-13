@@ -46,3 +46,8 @@ output "f5_bigip_password" {
   description = "F5 management IP"
   value       = module.bigip.bigip_password
 }
+
+output "hcp_vault_cluster_id" {
+  description = "hcp vault id"
+  value       = module.hcp-vault.hcp_vault_cluster_id
+}
