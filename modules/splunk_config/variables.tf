@@ -45,3 +45,10 @@ variable "splunk_fqdn" {
   description = "splunk fqdn"
 }
 
+variable "hcp-vault-events" {
+  description = "splunk events token"
+}
+
+variable "hcp-vault-audit" {
+  description = "splunk audit token"
+}

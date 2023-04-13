@@ -20,7 +20,7 @@ data "hcp_hvn" "example" {
 }
 ## Add this here because the Splunk host needs to exist to initiate splunk provider. 
 ## And creating the vault cluster depends on splunk token values
-
+/*
 resource "hcp_vault_cluster" "example" {
   #cluster_id = data.hcp_vault_cluster.example.cluster_id
   cluster_id = var.hcp_vault_cluster_id
@@ -36,7 +36,7 @@ resource "hcp_vault_cluster" "example" {
     splunk_token  = random_uuid.hcp-vault-audit.result
   }
 }
-
+*/
 
 resource "splunk_inputs_http_event_collector" "hcp-vault-events-tf" {
   name       = "hcp-vault-events-tf"
@@ -46,7 +46,7 @@ resource "splunk_inputs_http_event_collector" "hcp-vault-events-tf" {
   sourcetype = "hcp_vault_events_log"
   disabled   = false
   use_ack    = 0
-  token = random_uuid.hcp-vault-events.result
+  token = var.hcp-vault-events
 
 }
 
@@ -58,7 +58,7 @@ resource "splunk_inputs_http_event_collector" "hcp-vault-audit-tf" {
   sourcetype = "vault_audit_log"
   disabled   = false
   use_ack    = 0
-  token = random_uuid.hcp-vault-audit.result
+  token = var.hcp-vault-audit
 
 }
 /*

@@ -12,3 +12,13 @@ variable "tier" {
   description = "Vault cluster tier"
   type        = string
 }
+
+variable "hcp-vault-audit" {
+  description = "Vault audit token"
+  type        = string
+}
+
+variable "hcp-vault-events" {
+  description = "Vault events token"
+  type        = string
+}

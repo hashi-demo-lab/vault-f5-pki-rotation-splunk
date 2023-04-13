@@ -7,6 +7,13 @@ resource "random_string" "suffix" {
   special = false
 }
 
+// Create random UID for Splunk HEC tokens
+resource "random_uuid" "hcp-vault-events" {
+}
+
+resource "random_uuid" "hcp-vault-audit" {
+}
+
 
 // hashicorp cloud platform (hcp) infrastructure
 module "hcp-hvn" {
@@ -70,6 +77,9 @@ module "hcp-vault" {
   deployment_name = var.deployment_name
   hvn_id          = module.hcp-hvn.id
   tier            = var.hcp_vault_tier
+
+  hcp-vault-audit = random_uuid.hcp-vault-audit.result
+  hcp-vault-events = random_uuid.hcp-vault-events.result
 }
 
 
@@ -138,4 +148,6 @@ module "splunk_config" {
   splunk_fqdn = module.splunk.splunk_fqdn1
   ##hcp_vault_cluster_id = module.hcp-vault.hcp_vault_cluster.vault.hcp_vault_cluster_id
   #hcp_vault_tier  = var.hcp_vault_tier
+  hcp-vault-audit = random_uuid.hcp-vault-audit.result
+  hcp-vault-events = random_uuid.hcp-vault-events.result
 }
