@@ -4,6 +4,12 @@ variable "app_prefix" {
   default     = "demoapp"
 }
 
+variable "auto_renew" {
+  type = boolean
+  description = "vault pki auto renew"
+  default = false
+}
+
 variable "vip_ip" {
   type        = string
   description = "Virtual Server IP"

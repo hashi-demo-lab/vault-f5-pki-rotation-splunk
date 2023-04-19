@@ -3,10 +3,16 @@ resource "vault_pki_secret_backend_cert" "this" {
   name    = "f5demo" # role name
 
   common_name           = var.common_name
-  min_seconds_remaining = "1209600"
-  auto_renew            = true
-}
+  min_seconds_remaining = "1209600" # 14 days - example only
+  auto_renew            = var.auto_renew
 
+  lifecycle {
+    postcondition {
+      condition = !self.renew_pending
+      error_message = "${var.common_name} - min remaining time reached. F5 Vault cert should be renewed."
+    }
+  }
+}
 
 resource "bigip_ssl_key" "key" {
   name      = "${var.app_prefix}${vault_pki_secret_backend_cert.this.expiration}.key"
@@ -69,7 +75,6 @@ resource "bigip_ltm_pool_attachment" "attach_node" {
   node     = "${bigip_ltm_node.node[each.key].name}:80"
 }
 
-
 # Create F5 virtual server
 resource "bigip_ltm_virtual_server" "https" {
   name                       = "/Common/${var.app_prefix}_vs_https"
@@ -79,7 +84,6 @@ resource "bigip_ltm_virtual_server" "https" {
   client_profiles            = [bigip_ltm_profile_client_ssl.profile.name]
   source_address_translation = "automap"
 }
-
 
 output "vault_cert" {
   value     = local.trimCert
@@ -118,8 +122,6 @@ data "tls_certificate" "this" {
     }
   } */
 } 
-
-
 
 
 locals {
