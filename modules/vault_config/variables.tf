@@ -7,14 +7,14 @@ variable "customername" {
 variable "vault_fqdn" {
   description = "vault fqdn"
   type        = string
-  default     = ""
+  default     = "https://hcp-vault-pcarey-public-vault-dce1423e.b5cdbc76.z1.hashicorp.cloud:8200"
   sensitive   = true
 }
 
 variable "vault_token" {
   description = "vault token"
   type        = string
-  default     = ""
+  default     = "hvs.CAESIAYVFnPKPUwqEFhXlOjOUrPTxTxh4Lidi76xxYqCRb3KGicKImh2cy41TGQzbFRHS2lXMHludjdTVVB1bHdLQzcuVDU1V1YQ5gI"
   sensitive   = true
 }
 

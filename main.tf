@@ -147,8 +147,6 @@ module "splunk_config" {
   HCP_CLIENT_SECRET = var.hcp_client_secret
   prefix = var.owner
   splunk_fqdn = module.splunk.splunk_fqdn1
-  ##hcp_vault_cluster_id = module.hcp-vault.hcp_vault_cluster.vault.hcp_vault_cluster_id
-  #hcp_vault_tier  = var.hcp_vault_tier
   hcp-vault-audit = random_uuid.hcp-vault-audit.result
   hcp-vault-events = random_uuid.hcp-vault-events.result
 }
