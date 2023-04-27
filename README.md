@@ -13,7 +13,7 @@ export HCP_CLIENT_SECRET=""
 ```sh
 # To handles dependencies target the HCP module first, to prevent Vault provider validation errors
 
-terraform apply --auto-approve -target module.hcp-vault; terraform apply --auto-approve
+terraform apply --auto-approve -target module.hcp-vault -target module.splunk; terraform apply --auto-approve
 ```
 
 set environment variables

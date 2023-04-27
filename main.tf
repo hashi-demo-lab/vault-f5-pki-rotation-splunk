@@ -133,8 +133,6 @@ module "splunk" {
   HCP_CLIENT_ID = var.hcp_client_id
   HCP_CLIENT_SECRET = var.hcp_client_secret
   prefix = var.owner
-  ##hcp_vault_cluster_id = module.hcp-vault.hcp_vault_cluster.vault.hcp_vault_cluster_id
-  #hcp_vault_tier  = var.hcp_vault_tier
 }
 
 # splunk configuration

@@ -198,7 +198,7 @@ resource "null_resource" "configure-splunk-app" {
       "curl https://download.splunk.com/products/splunk/releases/8.2.5/linux/splunk-8.2.5-77015bc7a462-linux-2.6-x86_64.rpm -o /home/ec2-user/splunk.rpm",
       "sudo chmod 644 /home/ec2-user/splunk.rpm",
       "sudo rpm -i /home/ec2-user/splunk.rpm",
-      "sudo /opt/splunk/bin/splunk start --accept-license --no-prompt --answer-yes --seed-passwd Splunksecurepassword123",
+      "sudo /opt/splunk/bin/splunk start --accept-license --no-prompt --answer-yes",
       "sudo /opt/splunk/bin/splunk enable boot-start",
       "sudo /opt/splunk/bin/splunk stop",
       "sudo cp /home/ec2-user/user-seed.conf /opt/splunk/etc/system/local/user-seed.conf",

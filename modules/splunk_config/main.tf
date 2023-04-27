@@ -3,7 +3,8 @@ provider "splunk" {
   url = "${var.splunk_fqdn}:8089"
   username             = "admin"
   password             = "Splunksecurepassword123"
-  insecure_skip_verify = true
+#  Debug only.
+#  insecure_skip_verify = true
 }
 
 resource "random_uuid" "hcp-vault-events" {
@@ -18,25 +19,6 @@ resource "random_uuid" "vault-metrics" {
 data "hcp_hvn" "example" {
   hvn_id = var.hcp_vault_hvn
 }
-## Add this here because the Splunk host needs to exist to initiate splunk provider. 
-## And creating the vault cluster depends on splunk token values
-/*
-resource "hcp_vault_cluster" "example" {
-  #cluster_id = data.hcp_vault_cluster.example.cluster_id
-  cluster_id = var.hcp_vault_cluster_id
-  hvn_id     = data.hcp_hvn.example.hvn_id
-  #public_endpoint = true
-  #tier = "starter_small"
-  metrics_config {
-    splunk_hecendpoint = "https://${var.splunk_fqdn}:8088"
-    splunk_token  = random_uuid.hcp-vault-events.result
-  }
-  audit_log_config {
-    splunk_hecendpoint = "https://${var.splunk_fqdn}:8088"
-    splunk_token  = random_uuid.hcp-vault-audit.result
-  }
-}
-*/
 
 resource "splunk_inputs_http_event_collector" "hcp-vault-events-tf" {
   name       = "hcp-vault-events-tf"
