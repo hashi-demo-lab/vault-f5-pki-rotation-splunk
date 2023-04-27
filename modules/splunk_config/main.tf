@@ -43,19 +43,7 @@ resource "splunk_inputs_http_event_collector" "hcp-vault-audit-tf" {
   token = var.hcp-vault-audit
 
 }
-/*
-resource "splunk_inputs_http_event_collector" "vault-metrics-tf" {
-  name       = "vault-metrics"
-  index      = "vault-metrics"
-  indexes    = ["vault-events"]
-  #  source     = "new:source"
-  sourcetype = "hashicorp_vault_telemetry"
-  disabled   = false
-  use_ack    = 0
-  token = random_uuid.vault-metrics.result
 
-}
-*/
 resource "splunk_indexes" "hcp-vault-events" {
   name                   = "hcp-vault-events"
   datatype               = "event"
