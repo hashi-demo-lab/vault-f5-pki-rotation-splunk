@@ -1,8 +1,8 @@
 provider "acme" {
   # production
-    server_url = "https://acme-v02.api.letsencrypt.org/directory"
+  #  server_url = "https://acme-v02.api.letsencrypt.org/directory"
   # staging
-  #  server_url = "https://acme-staging-v02.api.letsencrypt.org/directory"
+    server_url = "https://acme-staging-v02.api.letsencrypt.org/directory"
 }
 
 resource "tls_private_key" "private_key" {
@@ -16,9 +16,7 @@ resource "acme_registration" "reg" {
 
 resource "acme_certificate" "certificate" {
   account_key_pem           = "${acme_registration.reg.account_key_pem}"
-  //common_name               = "${var.splunk_domain}.${var.prefix}.sbx.hashidemos.io"
   common_name = aws_route53_record.splunk.fqdn
-  //subject_alternative_names = ["${var.splunk_domain}.${var.prefix}.sbx.hashidemos.io"]
   subject_alternative_names = [aws_route53_record.splunk.fqdn]
 
 
