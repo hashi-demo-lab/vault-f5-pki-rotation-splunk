@@ -30,11 +30,11 @@ resource "aws_eip_association" "main" {
 }
 
 
-resource "aws_key_pair" "main" {
-  key_name   = var.aws_key_pair_key_name
-  public_key = var.ssh_pubkey
-  
-}
+#resource "aws_key_pair" "main" {
+  #key_name   = var.aws_key_pair_key_name
+  #public_key = var.ssh_pubkey
+#  
+#}
 
 resource "aws_iam_instance_profile" "ssm_instance_profile" {
   name = "ssm_instance_profile"
@@ -67,6 +67,7 @@ resource "aws_instance" "bastion" {
   ami             = data.aws_ami.ubuntu20.id
   instance_type   = "t3.small"
   key_name        = aws_key_pair.main.key_name
+
   associate_public_ip_address = true
   subnet_id       = element(module.vpc.public_subnets, 1)
   security_groups = [module.sg-mgmt.security_group_id, module.sg-private.security_group_id]

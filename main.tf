@@ -7,6 +7,13 @@ resource "random_string" "suffix" {
   special = false
 }
 
+// Create random UID for Splunk HEC tokens
+resource "random_uuid" "hcp-vault-events" {
+}
+
+resource "random_uuid" "hcp-vault-audit" {
+}
+
 
 // hashicorp cloud platform (hcp) infrastructure
 module "hcp-hvn" {
@@ -71,6 +78,10 @@ module "hcp-vault" {
   deployment_name = var.deployment_name
   hvn_id          = module.hcp-hvn.id
   tier            = var.hcp_vault_tier
+
+  hcp-vault-audit = random_uuid.hcp-vault-audit.result
+  hcp-vault-events = random_uuid.hcp-vault-events.result
+  splunk_fqdn = module.splunk.splunk_fqdn1
 }
 
 
@@ -113,6 +124,7 @@ module "hcp-vault-config" {
   f5password          = module.bigip.bigip_password
   vault_bound_ami_ids = [module.infra-aws.bastion_ec2_ami_id]
 }
+
 
 # tfc agent for local dns resolution
 module "tfc-agent" {
@@ -159,7 +171,27 @@ resource "aws_route53_record" "private_record_dev" {
   ]
 }
 
+#splunk deployment
+module "splunk" {
+  source = "./modules/splunk/"
 
+  hcp_vault_cluster_id = var.deployment_name
+  hcp_vault_hvn   = module.hcp-hvn.id
+  HCP_CLIENT_ID = var.hcp_client_id
+  HCP_CLIENT_SECRET = var.hcp_client_secret
+  prefix = var.owner
+}
 
+# splunk configuration
+module "splunk_config" {
+  source = "./modules/splunk_config/"
 
-
+  hcp_vault_cluster_id = module.hcp-vault.hcp_vault_cluster_id
+  hcp_vault_hvn   = module.hcp-hvn.id
+  HCP_CLIENT_ID = var.hcp_client_id
+  HCP_CLIENT_SECRET = var.hcp_client_secret
+  prefix = var.owner
+  splunk_fqdn = module.splunk.splunk_fqdn1
+  hcp-vault-audit = random_uuid.hcp-vault-audit.result
+  hcp-vault-events = random_uuid.hcp-vault-events.result
+}

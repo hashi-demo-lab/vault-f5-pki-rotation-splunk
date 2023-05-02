@@ -46,3 +46,20 @@ output "f5_bigip_password" {
   description = "F5 management IP"
   value       = module.bigip.bigip_password
 }
+
+output "hcp_vault_cluster_id" {
+  description = "hcp vault id"
+  value       = module.hcp-vault.hcp_vault_cluster_id
+}
+
+# Splunk outputs
+
+output "splunk_web_url" {
+  description = "address to reach the splunk gui"
+  value       = module.splunk.splunk_weburl
+}
+
+output "splunk_login_credentials" {
+  description = "Splunk GUI login"
+  value       = "Check the user-seed.conf file"
+}
