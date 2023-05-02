@@ -1,0 +1,30 @@
+{{ with pkiCert "pki_intermediate/issue/f5demo" "common_name=dev.f5demo.com"}}
+
+{
+    "class": "AS3",
+    "action": "deploy",
+    "persist": true,
+    "declaration": {
+        "class": "ADC",
+        "schemaVersion": "3.0.0",
+        "id": "123abc",
+        "label": "Automate certificate lifecycle",
+        "remark": "Automate certificate lifecycle",
+        "Common": {
+            "class": "Tenant",
+            "Shared": {
+                "class": "Application",
+                "template": "shared",
+                "application123": {
+                    "class": "Certificate",
+                    "label": "Demo Webcert",
+                    "remark": "Initialize",
+                    "certificate": "{{ .Data.Cert | toJSON | replaceAll "\"" "" }}",
+                    "privateKey": "{{ .Data.Key | toJSON | replaceAll "\"" "" }}",
+                    "chainCA": "{{ .Data.CA | toJSON | replaceAll "\"" "" }}"
+                }
+            }
+        }
+    }
+}
+{{ end }}
