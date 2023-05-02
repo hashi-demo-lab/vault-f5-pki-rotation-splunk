@@ -4,10 +4,6 @@ terraform {
       source  = "hashicorp/aws"
       version = "=4.21.0"
     }
-    azurerm = {
-        source = "hashicorp/azurerm"
-        version = "3.48.0"
-    }
     acme = {
         source = "vancluever/acme"
         version = "~> 2.0"
@@ -15,6 +11,13 @@ terraform {
     tls = {
       source = "hashicorp/tls"
       version = "4.0.3"
+    }
+    splunk = {
+      source  = "splunk/splunk"
+    }
+    random = {
+      source = "hashicorp/random"
+      version = "3.4.3"
     }
   }
 }

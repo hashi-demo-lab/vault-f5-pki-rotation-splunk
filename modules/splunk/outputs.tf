@@ -1,8 +1,10 @@
 
-output "splunk_url" {
+output "splunk_weburl" {
   value = "https://${aws_route53_record.splunk.fqdn}:8000"
 }
-
+output "splunk_fqdn1" {
+  value = aws_route53_record.splunk.fqdn
+}
 # The rest of the outputs might only be required for debugging. In which case comment them out as required. 
 
 # output "splunk_eip_aws" {

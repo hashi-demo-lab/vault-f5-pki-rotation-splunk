@@ -20,37 +20,6 @@ variable "splunk_domain" {
   default = "splunk"
 }
 
-variable "region" {
-  description = "The region where the resources are created."
-  default     = "ap-southeast-2"
-}
-
-variable "address_space" {
-  description = "The address space that is used by the virtual network. You can supply more than one address space. Changing this forces a new resource to be created."
-  default     = "10.0.0.0/16"
-}
-
-variable "subnet_prefix" {
-  description = "The address prefix to use for the subnet."
-  default     = "10.0.10.0/24"
-}
-
-variable "instance_type" {
-  description = "Specifies the AWS instance type."
-  default     = "t2.medium"
-}
-
-variable "aws_key_name" {
-  default     = "user-key"
-  description = "stored aws ssh key"
-}
-
-variable "ssh_key" {
-  default = "/Users/ssh/private_key"
-  description = "location of ssh private key file"
-  
-}
-
 variable "HCP_CLIENT_ID" {
   description = "hcp service principal for vault config"
 }
@@ -72,3 +41,14 @@ variable "username" {
   default = "user"
 }
 
+variable "splunk_fqdn" {
+  description = "splunk fqdn"
+}
+
+variable "hcp-vault-events" {
+  description = "splunk events token"
+}
+
+variable "hcp-vault-audit" {
+  description = "splunk audit token"
+}

@@ -6,3 +6,7 @@ output "admin_token" {
 output "public_endpoint_url" {
   value = hcp_vault_cluster.vault.vault_public_endpoint_url
 }
+
+output "hcp_vault_cluster_id" {
+  value = hcp_vault_cluster.vault.cluster_id
+}
