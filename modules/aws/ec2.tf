@@ -30,11 +30,11 @@ resource "aws_eip_association" "main" {
 }
 
 
-#resource "aws_key_pair" "main" {
-  #key_name   = var.aws_key_pair_key_name
-  #public_key = var.ssh_pubkey
-#  
-#}
+resource "aws_key_pair" "main" {
+  key_name   = var.aws_key_pair_key_name
+  public_key = var.ssh_pubkey
+  
+}
 
 resource "aws_iam_instance_profile" "ssm_instance_profile" {
   name = "ssm_instance_profile"
