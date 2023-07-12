@@ -18,11 +18,17 @@ resource "aws_iam_user" "vault_mount_user" {
   force_destroy        = true
 }
 
-resource "aws_iam_user_policy" "vault_mount_user" {
+/* resource "aws_iam_user_policy" "vault_mount_user" {
+#  user   = aws_iam_user.vault_mount_user.name
+#  policy = data.aws_iam_policy.demo_user_permissions_boundary.policy
+#  name   = "DemoUserInlinePolicy"
+} */
+
+resource "aws_iam_user_policy_attachment" "vault_mount_user" {
   user   = aws_iam_user.vault_mount_user.name
-  policy = data.aws_iam_policy.demo_user_permissions_boundary.policy
-  name   = "DemoUserInlinePolicy"
+  policy_arn = data.aws_iam_policy.demo_user_permissions_boundary.arn
 }
+
 
 resource "aws_iam_access_key" "vault_mount_user" {
   user = aws_iam_user.vault_mount_user.name
