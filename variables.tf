@@ -73,7 +73,7 @@ variable "aws_region" {
 variable "aws_key_pair_key_name" {
   description = "Key pair name"
   type        = string
-  default     = ""
+  default     = "f5demo"
 }
 
 variable "ssh_pubkey" {
