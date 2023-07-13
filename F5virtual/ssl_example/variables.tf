@@ -21,3 +21,11 @@ variable "common_name" {
   description = "certificate common name"
   default     = "dev.f5demo.com"
 }
+
+variable "min_seconds_remaining" {
+  type        = string
+  description = "min seconds remaining"
+  default     = "1728001"
+}
+
+

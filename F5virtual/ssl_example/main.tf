@@ -3,7 +3,7 @@ resource "vault_pki_secret_backend_cert" "this" {
   name    = var.pki_role
 
   common_name           = var.common_name
-  min_seconds_remaining = "1209600" # 14 days - example only
+  min_seconds_remaining = var.min_seconds_remaining # "1209600" # 14 days - example only
   auto_renew            = var.auto_renew
 
   lifecycle {
