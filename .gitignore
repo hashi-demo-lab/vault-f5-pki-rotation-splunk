@@ -6,6 +6,9 @@
 *.tfstate.*
 *.state.*
 
+#key files
+*.key
+
 # Crash log files
 crash.log
 
