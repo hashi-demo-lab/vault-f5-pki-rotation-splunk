@@ -20,7 +20,7 @@ locals {
 
 check "certificate" {
   assert {
-    condition     = certificate_renew_pending == true
+    condition     = local.certificate_renew_pending == true
     
     error_message = <<-EOF
     Certificate Renewal Pending: ${vault_pki_secret_backend_cert.this.common_name}
