@@ -3,13 +3,28 @@ resource "vault_pki_secret_backend_cert" "this" {
   name    = var.pki_role
 
   common_name           = var.common_name
-  min_seconds_remaining = var.min_seconds_remaining # "1209600" # 14 days - example only
+  min_seconds_remaining = var.min_seconds_remaining
   auto_renew            = var.auto_renew
 
-  lifecycle {
+/*   lifecycle {
     postcondition {
       condition = !self.renew_pending
       error_message = "${var.common_name} - min remaining time reached. F5 Vault cert should be renewed."
     }
+  } */
+}
+
+locals {
+  certificate_renew_pending = vault_pki_secret_backend_cert.this.renew_pending
+}
+
+check "certificate" {
+  assert {
+    condition     = certificate_renew_pending == true
+    
+    error_message = <<-EOF
+    Certificate Renewal Pending: ${vault_pki_secret_backend_cert.this.common_name}
+    EOF
   }
 }
+
