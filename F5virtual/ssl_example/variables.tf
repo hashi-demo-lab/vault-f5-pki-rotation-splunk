@@ -1,7 +1,6 @@
 variable "auto_renew" {
   type = bool
   description = "vault pki auto renew"
-  default = true
 }
 
 variable "pki_intermediate_path" {
