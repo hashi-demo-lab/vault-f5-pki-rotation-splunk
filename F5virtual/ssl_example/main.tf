@@ -17,6 +17,8 @@ check "certificate" {
 
     error_message = <<-EOF
     Certificate Renewal Pending: ${vault_pki_secret_backend_cert.this.common_name}
+    min_seconds_remaining: ${var.min_seconds_remaining}
+    auto_renew: ${var.auto_renew}
     EOF
   }
 }
