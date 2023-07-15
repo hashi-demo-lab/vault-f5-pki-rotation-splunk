@@ -79,9 +79,9 @@ module "hcp-vault" {
   hvn_id          = module.hcp-hvn.id
   tier            = var.hcp_vault_tier
 
-  hcp-vault-audit = random_uuid.hcp-vault-audit.result
+  hcp-vault-audit  = random_uuid.hcp-vault-audit.result
   hcp-vault-events = random_uuid.hcp-vault-events.result
-  splunk_fqdn = module.splunk.splunk_fqdn1
+  splunk_fqdn      = module.splunk.splunk_fqdn1
 }
 
 
@@ -176,10 +176,10 @@ module "splunk" {
   source = "./modules/splunk/"
 
   hcp_vault_cluster_id = var.deployment_name
-  hcp_vault_hvn   = module.hcp-hvn.id
-  HCP_CLIENT_ID = var.hcp_client_id
-  HCP_CLIENT_SECRET = var.hcp_client_secret
-  prefix = var.owner
+  hcp_vault_hvn        = module.hcp-hvn.id
+  HCP_CLIENT_ID        = var.hcp_client_id
+  HCP_CLIENT_SECRET    = var.hcp_client_secret
+  prefix               = var.owner
 }
 
 # splunk configuration
@@ -187,11 +187,11 @@ module "splunk_config" {
   source = "./modules/splunk_config/"
 
   hcp_vault_cluster_id = module.hcp-vault.hcp_vault_cluster_id
-  hcp_vault_hvn   = module.hcp-hvn.id
-  HCP_CLIENT_ID = var.hcp_client_id
-  HCP_CLIENT_SECRET = var.hcp_client_secret
-  prefix = var.owner
-  splunk_fqdn = module.splunk.splunk_fqdn1
-  hcp-vault-audit = random_uuid.hcp-vault-audit.result
-  hcp-vault-events = random_uuid.hcp-vault-events.result
+  hcp_vault_hvn        = module.hcp-hvn.id
+  HCP_CLIENT_ID        = var.hcp_client_id
+  HCP_CLIENT_SECRET    = var.hcp_client_secret
+  prefix               = var.owner
+  splunk_fqdn          = module.splunk.splunk_fqdn1
+  hcp-vault-audit      = random_uuid.hcp-vault-audit.result
+  hcp-vault-events     = random_uuid.hcp-vault-events.result
 }
