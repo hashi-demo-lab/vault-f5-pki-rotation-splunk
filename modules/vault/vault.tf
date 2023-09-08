@@ -4,14 +4,14 @@ resource "hcp_vault_cluster" "vault" {
   tier            = var.tier
   public_endpoint = true
 
-  metrics_config {
+/*   metrics_config {
     splunk_hecendpoint = "https://${var.splunk_fqdn}:8088"
     splunk_token  = var.hcp-vault-events
   }
   audit_log_config {
     splunk_hecendpoint = "https://${var.splunk_fqdn}:8088"
     splunk_token  = var.hcp-vault-audit
-  }
+  } */
 }
 
 resource "hcp_vault_cluster_admin_token" "token" {

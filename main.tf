@@ -81,7 +81,7 @@ module "hcp-vault" {
 
   hcp-vault-audit  = random_uuid.hcp-vault-audit.result
   hcp-vault-events = random_uuid.hcp-vault-events.result
-  splunk_fqdn      = module.splunk.splunk_fqdn1
+  #splunk_fqdn      = module.splunk.splunk_fqdn1
 }
 
 
@@ -171,7 +171,8 @@ resource "aws_route53_record" "private_record_dev" {
   ]
 }
 
-#splunk deployment
+/*
+#splunk deployment 
 module "splunk" {
   source = "./modules/splunk/"
 
@@ -194,4 +195,4 @@ module "splunk_config" {
   splunk_fqdn          = module.splunk.splunk_fqdn1
   hcp-vault-audit      = random_uuid.hcp-vault-audit.result
   hcp-vault-events     = random_uuid.hcp-vault-events.result
-}
+} */
