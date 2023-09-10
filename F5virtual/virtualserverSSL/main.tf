@@ -1,9 +1,13 @@
+locals {
+  min_remaining_seconds = var.min_days_remaining * 24 * 60 * 60
+}
+
 resource "vault_pki_secret_backend_cert" "this" {
   backend = "pki_intermediate"
   name    = "f5demo" # role name
 
   common_name           = var.common_name
-  min_seconds_remaining = "1209600" # 14 days - example only
+  min_seconds_remaining = local.min_remaining_seconds
   auto_renew            = var.auto_renew
 
 /*   lifecycle {
@@ -95,6 +99,10 @@ output "vault_cert_serial" {
 
 output "vault_cert_sha1" {
   value = local.sha1_vault_cert
+}
+
+output  "min_days" {
+  value = local.min_remaining_seconds
 }
 
 /* output "f5_lb_certs_tls_datasource" {

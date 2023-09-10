@@ -1,3 +1,9 @@
+variable "min_days_remaining" {
+  type = number
+  default = 20
+}
+
+
 variable "app_prefix" {
   type        = string
   description = "prefix used for f5 resource create uniqueness"
