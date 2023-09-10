@@ -5,9 +5,9 @@ variable "app_prefix" {
 }
 
 variable "auto_renew" {
-  type = boolean
+  type        = bool
   description = "vault pki auto renew"
-  default = false
+  default     = true
 }
 
 variable "vip_ip" {

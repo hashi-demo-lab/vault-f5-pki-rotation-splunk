@@ -8,7 +8,7 @@ resource "vault_pki_secret_backend_cert" "this" {
 
   lifecycle {
     postcondition {
-      condition = !self.renew_pending
+      condition     = !self.renew_pending
       error_message = "${var.common_name} - min remaining time reached. F5 Vault cert should be renewed."
     }
   }
@@ -28,7 +28,7 @@ resource "bigip_ssl_certificate" "cert" {
   name      = "${var.app_prefix}${vault_pki_secret_backend_cert.this.expiration}.crt"
   content   = local.trimCert
   partition = var.f5_partition
-  
+
   lifecycle {
     create_before_destroy = true
   }
@@ -66,7 +66,7 @@ resource "bigip_ltm_node" "node" {
   for_each = toset(var.node_list)
   name     = "/Common/${each.value}"
   address  = each.value
-  monitor = "/Common/none"
+  monitor  = "/Common/none"
 }
 
 resource "bigip_ltm_pool_attachment" "attach_node" {
@@ -86,7 +86,7 @@ resource "bigip_ltm_virtual_server" "https" {
 }
 
 output "vault_cert" {
-  value     = local.trimCert
+  value = local.trimCert
 }
 
 output "vault_cert_serial" {
@@ -112,23 +112,23 @@ data "tls_certificate" "this" {
     vault_pki_secret_backend_cert.this
   ]
 
-  url = "https://${var.common_name}"
+  url          = "https://${var.common_name}"
   verify_chain = false
 
- /*  lifecycle {
+  /*  lifecycle {
     postcondition {
       condition     = self.certificates[0].serial_number == local.vault_cert
       error_message = "Certificate serial numbers do not match for ${var.f5_partition}/${bigip_ssl_certificate.cert.name}"
     }
   } */
-} 
+}
 
 
 locals {
-  trimPrivate   = trim(vault_pki_secret_backend_cert.this.private_key, "\n")
-  trimCert      = trim(vault_pki_secret_backend_cert.this.certificate, "\n")
-  trim_ca_chain = trim(vault_pki_secret_backend_cert.this.ca_chain, "\n")
+  trimPrivate     = trim(vault_pki_secret_backend_cert.this.private_key, "\n")
+  trimCert        = trim(vault_pki_secret_backend_cert.this.certificate, "\n")
+  trim_ca_chain   = trim(vault_pki_secret_backend_cert.this.ca_chain, "\n")
   sha1_vault_cert = sha1(local.trimCert)
-  vault_cert = replace(vault_pki_secret_backend_cert.this.serial_number, ":", "")
-  lb_cert = data.tls_certificate.this.certificates
+  vault_cert      = replace(vault_pki_secret_backend_cert.this.serial_number, ":", "")
+  lb_cert         = data.tls_certificate.this.certificates
 }

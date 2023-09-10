@@ -242,7 +242,7 @@ variable "number_of_agents" {
 variable "assign_public_ip" {
   type        = bool
   description = "Only required when using Fargate for ECS services placed in public subnets. Needed for fargate to assign ENI and pull docker image. True or False"
-  default     = "false"
+  default     = "true"
 }
 
 variable "agent_image" {

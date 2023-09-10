@@ -10,7 +10,7 @@ hcp_vault_tier = "standard_small"
 # terraform cloud workspace onboarding varables
 organization    = "hashi-demos-apj"
 customername    = "acme"
-tfc_agent_token = "test123"
+tfc_agent_token = "sometoken"
 
 # F5 Variables
-ingress_cidr_blocks = ["202.137.173.136/32"]
+ingress_cidr_blocks = ["163.53.144.90/32"]
