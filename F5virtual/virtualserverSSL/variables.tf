@@ -26,7 +26,7 @@ variable "node_list" {
 variable "f5_mgmtPublicDNS" {
   type        = string
   description = "F5 management address"
-  default     = "ec2-54-253-196-23.ap-southeast-2.compute.amazonaws.com:8443"
+  default     = "ec2-13-55-213-18.ap-southeast-2.compute.amazonaws.com:8443"
   sensitive   = true
 }
 
