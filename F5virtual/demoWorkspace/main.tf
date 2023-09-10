@@ -22,6 +22,7 @@ module "workspace" {
   workspace_vcs_directory = "F5virtual/virtualserverSSL"
   workspace_auto_apply    = true
   assessments_enabled     = true
+  workspace_tags          = ["f5"]
 
 }
 
@@ -30,6 +31,7 @@ resource "tfe_variable" "f5" {
 
   key      = "f5_password"
   value    = "Hashicorp1!"
+  sensitive = true
   category = "terraform"
 
   description = "f5"
@@ -99,4 +101,14 @@ resource "tfe_variable" "tfc_vault_namespace" {
   category = "env"
 
   description = "The Vault namespace to use, if not using the default"
+}
+
+resource "tfe_variable" "min_days_remaining" {
+  workspace_id = module.workspace.workspace_id
+
+  key      = "min_days_remaining"
+  value    = 20
+  category = "terraform"
+
+  description = "certificate min days remaining for renewal"
 }
