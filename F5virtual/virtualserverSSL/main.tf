@@ -97,9 +97,9 @@ output "vault_cert_sha1" {
   value = local.sha1_vault_cert
 }
 
-output "f5_lb_certs_tls_datasource" {
+/* output "f5_lb_certs_tls_datasource" {
   value = local.lb_cert
-}
+} */
 
 ### Validation Example
 
