@@ -24,6 +24,28 @@ module "workspace" {
 
 }
 
+resource "tfe_variable" "f5" {
+  workspace_id = module.workspace.workspace_id
+
+  key      = "f5_password"
+  value    = "Hashicorp1!"
+  category = "terraform"
+
+  description = "f5"
+}
+
+resource "tfe_variable" "vault_adress" {
+  workspace_id = module.workspace.workspace_id
+
+  key      = "VAULT_ADDR"
+  value    = var.vault_adress
+  category = "env"
+
+  description = "Vault Address"
+}
+
+
+
 resource "tfe_variable" "tfc_azure_client_id" {
   workspace_id = module.workspace.workspace_id
 
