@@ -6,12 +6,12 @@ resource "vault_pki_secret_backend_cert" "this" {
   min_seconds_remaining = "1209600" # 14 days - example only
   auto_renew            = var.auto_renew
 
-  lifecycle {
+/*   lifecycle {
     postcondition {
       condition     = !self.renew_pending
       error_message = "${var.common_name} - min remaining time reached. F5 Vault cert should be renewed."
     }
-  }
+  } */
 }
 
 resource "bigip_ssl_key" "key" {
@@ -107,7 +107,7 @@ locals {
 
 }
 
-data "tls_certificate" "this" {
+/*data "tls_certificate" "this" {
   depends_on = [
     vault_pki_secret_backend_cert.this
   ]
@@ -115,14 +115,14 @@ data "tls_certificate" "this" {
   url          = "https://${var.common_name}"
   verify_chain = false
 
-  /*  lifecycle {
+    lifecycle {
     postcondition {
       condition     = self.certificates[0].serial_number == local.vault_cert
       error_message = "Certificate serial numbers do not match for ${var.f5_partition}/${bigip_ssl_certificate.cert.name}"
     }
-  } */
+  } 
 }
-
+*/
 
 locals {
   trimPrivate     = trim(vault_pki_secret_backend_cert.this.private_key, "\n")

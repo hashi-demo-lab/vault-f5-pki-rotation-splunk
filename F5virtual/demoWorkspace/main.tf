@@ -21,6 +21,7 @@ module "workspace" {
   }
   workspace_vcs_directory = "F5virtual/virtualserverSSL"
   workspace_auto_apply    = true
+  assessments_enabled     = true
 
 }
 
@@ -54,17 +55,6 @@ resource "tfe_variable" "f5_adress" {
   description = "f5 Address"
 }
 
-
-
-resource "tfe_variable" "tfc_azure_client_id" {
-  workspace_id = module.workspace.workspace_id
-
-  key      = "TFC_AZURE_RUN_CLIENT_ID"
-  value    = ""
-  category = "env"
-
-  description = "The Azure Client ID runs will use to authenticate."
-}
 
 #### Dynamic Provider Credentials Vars
 
