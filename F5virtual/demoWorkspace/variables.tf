@@ -7,3 +7,13 @@ variable "f5_mgmtPublicDNS" {
   type    = string
   default = ""
 }
+
+variable "vault_role" {
+  type    = string
+  default = "f5demo"
+}
+
+variable "vault_namespace" {
+  type    = string
+  default = ""
+}

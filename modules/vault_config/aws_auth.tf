@@ -53,3 +53,4 @@ resource "vault_aws_auth_backend_role" "vault_ec2_auth_role" {
   token_max_ttl  = 120
   token_policies = ["cert-policy"]
 }
+

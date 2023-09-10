@@ -66,3 +66,47 @@ resource "tfe_variable" "tfc_azure_client_id" {
   description = "The Azure Client ID runs will use to authenticate."
 }
 
+#### Dynamic Provider Credentials Vars
+
+resource "tfe_variable" "enable_vault_provider_auth" {
+  workspace_id = module.workspace.workspace_id
+
+  key      = "TFC_VAULT_PROVIDER_AUTH"
+  value    = "true"
+  category = "env"
+
+  description = "Enable the Workload Identity integration for Vault."
+}
+
+resource "tfe_variable" "tfc_vault_addr" {
+  workspace_id = module.workspace.workspace_id
+
+  key       = "TFC_VAULT_ADDR"
+  value     = var.vault_address
+  category  = "env"
+  sensitive = true
+
+  description = "The address of the Vault instance runs will access."
+}
+
+resource "tfe_variable" "tfc_vault_role" {
+  workspace_id = module.workspace.workspace_id
+
+  key      = "TFC_VAULT_RUN_ROLE"
+  value    = var.vault_role
+  category = "env"
+
+  description = "The Vault role runs will use to authenticate."
+}
+
+
+
+resource "tfe_variable" "tfc_vault_namespace" {
+  workspace_id = module.workspace.workspace_id
+
+  key      = "TFC_VAULT_NAMESPACE"
+  value    = var.vault_namespace
+  category = "env"
+
+  description = "The Vault namespace to use, if not using the default"
+}
